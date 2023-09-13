@@ -6,11 +6,11 @@
 void limpar_Tela() {
     system("cls"); // Limpa a tela no Windows
 }
-
+//teste de edi√ß√£o
 void main() {
     setlocale(LC_ALL, "Portuguese");
 
-    printf("              ____________ \n");
+    printf("              ____________  \n");
     printf("             //        / /\\ \n");
     printf("            //        / /  \\ \n");
     printf("           //________/ /    \\ \n");
@@ -53,7 +53,7 @@ void main() {
         }
     } while (!senha_correta);
 
-    // Aqui fiz uma verificaÁ„o antes de acessar o projeto, ele pede uma senha
+    // Aqui fiz uma verifica√ß√£o antes de acessar o projeto, ele pede uma senha
     // no caso a 123, caso nao seja digitada ele vai exibir a mensagem que esta incorretaa
 
     int selecione;
@@ -61,7 +61,7 @@ void main() {
     // Matriz para representar os quartos em cada andar (5 andares x 10 quartos)
     int quartos[5][10];
 
-    // Inicialize todos os quartos como disponÌveis (true)
+    // Inicialize todos os quartos como dispon√≠veis (true)
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 10; j++) {
             quartos[i][j] = true;
@@ -70,40 +70,40 @@ void main() {
 
     do {
         limpar_Tela();
-        printf("Menu de OpÁıes:\n\n");
-        printf("1 - Quartos DisponÌveis\n");
+        printf("Menu de Op√ß√µes:\n\n");
+        printf("1 - Quartos Dispon√≠veis\n");
         printf("2 - Reservar um Quarto\n");
         printf("3 - Cancelar a Reserva\n");
         printf("4 - Consultar a Reserva\n");
         printf("5 - Sair\n\n");
-        printf("Escolha uma opÁ„o para prosseguir: ");
+        printf("Escolha uma op√ß√£o para prosseguir: ");
         scanf("%d", &selecione);
 
-        // menu com as opÁıes disponiveis
+        // menu com as op√ß√µes disponiveis
 
         switch (selecione) {
-            case 1: // cada case È uma das opÁıes a cima
+            case 1: // cada case √© uma das op√ß√µes a cima
                 limpar_Tela(); //limpa a tela
-                printf("VocÍ selecionou a OpÁ„o 1 - Quartos DisponÌveis\n\n"); //exibe essa mensagem e mostra as opÁıes disponiveis
+                printf("Voc√™ selecionou a Op√ß√£o 1 - Quartos Dispon√≠veis\n\n"); //exibe essa mensagem e mostra as op√ß√µes disponiveis
 
-                int andar; // aqui comeÁa as opÁıes das opÁıes, por exemplo os andar do predio
-                printf("Selecione o andar (1∞, 2∞, 3∞, 4∞, 5∞): ");
+                int andar; // aqui come√ßa as op√ß√µes das op√ß√µes, por exemplo os andar do predio
+                printf("Selecione o andar (1¬∞, 2¬∞, 3¬∞, 4¬∞, 5¬∞): ");
                 scanf("%d", &andar);
 
-                if (andar >= 1 && andar <= 5) { // aqui vai fazer uma verificaÁ„o para exibir a lista no for
-                    printf("\nQuartos disponÌveis no %d∞ andar:\n\n", andar);
+                if (andar >= 1 && andar <= 5) { // aqui vai fazer uma verifica√ß√£o para exibir a lista no for
+                    printf("\nQuartos dispon√≠veis no %d¬∞ andar:\n\n", andar);
 
-                    // Exibir os quartos disponÌveis no andar selecionado
+                    // Exibir os quartos dispon√≠veis no andar selecionado
                     for (int quarto = 0; quarto < 10; quarto++) {
                         if (quartos[andar - 1][quarto]) {
                             printf("Quarto %d\n\n", quarto + 1);
-                            // Para continuar, decidir qual a melhor forma de colocar os preÁos
-                            // Por exemplo preÁo fixo por andar
+                            // Para continuar, decidir qual a melhor forma de colocar os pre√ßos
+                            // Por exemplo pre√ßo fixo por andar
                             // Quanto mais alto mais caro
                         }
                     }
                 } else {
-                    printf("Andar inv·lido !\n");
+                    printf("Andar inv√°lido !\n");
                 }
 
                 printf("Pressione Enter para voltar ao menu...");
@@ -112,9 +112,9 @@ void main() {
 
 		case 2:
                 limpar_Tela();
-                printf("VocÍ selecionou a OpÁ„o 2 - Reservar um Quarto\n\n");
+                printf("Voc√™ selecionou a Op√ß√£o 2 - Reservar um Quarto\n\n");
 
-                // continuar o cÛdigo
+                // continuar o c√≥digo
 
                 printf("Pressione Enter para voltar ao menu...");
                 getch();
@@ -122,9 +122,9 @@ void main() {
 
             case 3:
                 limpar_Tela();
-                printf("VocÍ selecionou a OpÁ„o 3 - Cancelar a Reserva\n\n");
+                printf("Voc√™ selecionou a Op√ß√£o 3 - Cancelar a Reserva\n\n");
 
-                // continuar o cÛdigo
+                // continuar o c√≥digo
 
                 printf("Pressione Enter para voltar ao menu...");
                 getch();
@@ -132,9 +132,9 @@ void main() {
 
             case 4:
                 limpar_Tela();
-                printf("VocÍ selecionou a OpÁ„o 4 - Consultar a Reserva\n\n");
+                printf("Voc√™ selecionou a Op√ß√£o 4 - Consultar a Reserva\n\n");
 
-                // continuar o cÛdigo
+                // continuar o c√≥digo
 
                 printf("Pressione Enter para voltar ao menu...");
                 getch();
@@ -145,7 +145,7 @@ void main() {
                 break;
             default:
                 limpar_Tela();
-                printf("OpÁ„o inv·lida. Tente novamente.\n\n");
+                printf("Op√ß√£o inv√°lida. Tente novamente.\n\n");
                 printf("Pressione Enter para continuar...");
                 getch();
         }
