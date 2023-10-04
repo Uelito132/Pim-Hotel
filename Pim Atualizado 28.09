@@ -288,7 +288,7 @@ void main() {
                     printf("Andar inválido!\n");
                 }
 
-                printf("Pressione Enter para voltar ao menu...");
+                printf("\nPressione Enter para voltar ao menu...");
                 getchar(); // Limpa o buffer do teclado
                 break;
 
@@ -298,8 +298,8 @@ void main() {
 
             default:
                 limpar_Tela();
-                printf("Opção inválida. Tente novamente.\n\n");
-                printf("Pressione Enter para continuar...");
+                printf("\nOpção inválida. Tente novamente.\n\n");
+                printf("\nPressione Enter para continuar...");
                 getchar();
         }
 
