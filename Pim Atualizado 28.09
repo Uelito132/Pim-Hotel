@@ -16,7 +16,7 @@ struct Quarto {
 };
 
 void limpar_Tela() {
-    system("cls"); // Limpa a tela no Windows
+    system("cls||clear"); // Limpa a tela no Windows e linux
 }
 
 void main() {
