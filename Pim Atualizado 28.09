@@ -56,11 +56,11 @@ void main() {
 
     do {
         limpar_Tela();
-        printf ("Bem vindo! Qual hotel gostaria de se hospedar?\n");
+        printf ("Bem vindo! Qual hotel gostaria de se hospedar?\n\n");
         printf ("1- Hotel Tokyo\n");
         printf ("2- Hotel Holandes\n");
         printf ("3- Hotel Miles Morales\n");
-        printf ("4- Sair\n");
+        printf ("4- Sair\n\n");
         scanf ("%d", &menu);
 
         switch (menu) {
@@ -74,7 +74,7 @@ void main() {
                 printf("Você selecionou o Hotel Miles Morales\n");
                 break;
             case 4:
-                printf("Saindo do programa!\n\n");
+                printf("\nSaindo do programa!\n\n");
                 return 0; // Encerra o programa imediatamente
             default:
                 printf("Opção inválida. Tente novamente.\n\n");
@@ -293,7 +293,7 @@ void main() {
                 break;
 
             case 7:
-                printf("Saindo do programa!\n\n");
+                printf("\nSaindo do programa!\n\n");
                 break;
 
             default:
