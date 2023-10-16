@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -114,6 +115,7 @@ int main()
                 switch (selecione)
                 {
                 case 1:
+
                     limpar_Tela();
                     printf("VocÍ selecionou a OpÁ„o 1 - Quartos DisponÌveis\n\n");
 
@@ -226,6 +228,7 @@ int main()
                     break;
 
                 case 3:
+
                     limpar_Tela();
                     printf("VocÍ selecionou a OpÁ„o 3 - Cancelar a Reserva\n\n");
 
@@ -304,14 +307,83 @@ int main()
                     break;
 
                 case 5:
+
                     limpar_Tela();
                     printf("VocÍ selecionou a OpÁ„o 5 - Gerar CobranÁa\n\n");
 
-                    // Implemente o cÛdigo para gerar cobranÁa aqui
+                    int andar_cobranca;
+                    printf("Digite o andar para gerar a cobranÁa (1∞, 2∞, 3∞, 4∞, 5∞): ");
+                    scanf("%d", &andar_cobranca);
 
-                    printf("Pressione Enter para voltar ao menu...");
+                    if (andar_cobranca >= 1 && andar_cobranca <= 5)
+                    {
+                        // Vari·vel para rastrear se h· pelo menos um quarto ocupado no andar
+                        bool quarto_ocupado = false;
+                        int quarto_pago = -1;
+
+                        printf("Quartos ocupados no %d∞ andar:\n\n", andar_cobranca);
+                        for (int quarto = 0; quarto < 10; quarto++)
+                        {
+                            if (!quartos[andar_cobranca - 1][quarto].disponivel)
+                            {
+                                printf("Quarto %d\n", quartos[andar_cobranca - 1][quarto].numero);
+
+                                printf("\n");
+                                quarto_ocupado = true;
+                            }
+                        }
+
+                        if (quarto_ocupado)
+                        {
+                            int quarto_cobranca;
+                            printf("Escolha o n˙mero do quarto para gerar a cobranÁa: ");
+                            scanf("%d", &quarto_cobranca);
+
+                            if (quarto_cobranca >= 1 && quarto_cobranca <= 10 && !quartos[andar_cobranca - 1][quarto_cobranca - 1].disponivel)
+                            {
+                                quarto_pago = quarto_cobranca - 1;
+
+                                // Exibir informaÁıes detalhadas da reserva
+                                printf("Nome do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago].nome_cliente);
+                                printf("CPF do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago].cpf_cliente);
+                                printf("PreÁo: R$ %.2lf\n", quartos[andar_cobranca - 1][quarto_pago].preco);
+                                printf("Data de Check-in: %s\n", quartos[andar_cobranca - 1][quarto_pago].data_checkin);
+                                printf("Data de Check-out: %s\n", quartos[andar_cobranca - 1][quarto_pago].data_checkout);
+                                printf("\n");
+
+                                int pagamento_confirmado;
+                                printf("Quarto %d pago? (1 para sim, 0 para n„o): ", quarto_cobranca);
+                                scanf("%d", &pagamento_confirmado);
+
+                                if (pagamento_confirmado == 1)
+                                {
+                                    // Marcar o quarto como disponÌvel novamente
+                                    quartos[andar_cobranca - 1][quarto_pago].disponivel = true;
+                                    strcpy(quartos[andar_cobranca - 1][quarto_pago].nome_cliente, "");
+                                    strcpy(quartos[andar_cobranca - 1][quarto_pago].cpf_cliente, "");
+                                    strcpy(quartos[andar_cobranca - 1][quarto_pago].data_checkin, "");
+                                    strcpy(quartos[andar_cobranca - 1][quarto_pago].data_checkout, "");
+                                }
+                            }
+                            else
+                            {
+                                printf("Quarto selecionado n„o est· ocupado ou È inv·lido.\n");
+                            }
+                        }
+                        else
+                        {
+                            printf("Nenhum quarto ocupado neste andar para gerar cobranÁa.\n");
+                        }
+                    }
+                    else
+                    {
+                        printf("Andar inv·lido!\n");
+                    }
+
+                    printf("\nPressione Enter para voltar ao menu...");
                     getchar(); // Limpa o buffer do teclado
                     break;
+
 
                 case 6:
                     limpar_Tela();
@@ -388,163 +460,3 @@ int main()
         // Se o usu·rio n„o selecionou um hotel v·lido, continue pedindo a seleÁ„o do hotel
     } while (menu < 1 || menu > 3);
 }
-=======
-#include <stdio.h>
-#include <stdlib.h>
-#include <locale.h>
-#include <stdbool.h>
-
-void limpar_Tela() {
-    system("cls"); // Limpa a tela no Windows
-}
-//teste de edi√ß√£o
-void main() {
-    setlocale(LC_ALL, "Portuguese");
-
-    printf("              ____________  \n");
-    printf("             //        / /\\ \n");
-    printf("            //        / /  \\ \n");
-    printf("           //________/ /    \\ \n");
-    printf("          //        / /      \\ \n");
-    printf("         //        / /        \\ \n");
-    printf("        //________/ /          \\ \n");
-    printf("       //        / /            \\ \n");
-    printf("      //        / /              \\ \n");
-    printf("     //________/ /                \\ \n");
-    printf("    //        / /__________________\\ \n");
-    printf("   //        / /       ________     \\ \n");
-    printf("  //        / /       /       /\\     \\ \n");
-    printf(" //________/ /_______/_______/__\\_____\\ \n");
-    printf(" | |    | |  _______  _____           _ \n");
-    printf(" | |    | | |  ___  ||_   _| ______  | | \n");
-    printf(" | |____| | | |   | |  | |  |   ___| | | \n");
-    printf(" |  ____  | | |   | |  | |  |  |___  | | \n");
-    printf(" | |    | | | |   | |  | |  |   ___| | | \n");
-    printf(" | |    | | | |___| |  | |  |  |___  | |______\n");
-    printf(" |_|    |_| |_______|  |_|  |______| |________|\n\n");
-
-    // Desenho que vai aparecer na tela inicial antes de iniciar o projeto
-    printf("Pressione Enter para continuar...");
-    getchar();
-
-   int senha;
-    int senha_correta = false;
-
-    do {
-        limpar_Tela();
-        printf("Digite sua senha de acesso:");
-        scanf("%d", &senha);
-
-        if (senha == 123) {
-            senha_correta = true;
-        } else {
-            printf("Senha incorreta !\n\n");
-            printf("Pressione Enter para continuar...");
-            getch();
-        }
-    } while (!senha_correta);
-
-    // Aqui fiz uma verifica√ß√£o antes de acessar o projeto, ele pede uma senha
-    // no caso a 123, caso nao seja digitada ele vai exibir a mensagem que esta incorretaa
-
-    int selecione;
-
-    // Matriz para representar os quartos em cada andar (5 andares x 10 quartos)
-    int quartos[5][10];
-
-    // Inicialize todos os quartos como dispon√≠veis (true)
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 10; j++) {
-            quartos[i][j] = true;
-        }
-    }
-
-    do {
-        limpar_Tela();
-        printf("Menu de Op√ß√µes:\n\n");
-        printf("1 - Quartos Dispon√≠veis\n");
-        printf("2 - Reservar um Quarto\n");
-        printf("3 - Cancelar a Reserva\n");
-        printf("4 - Consultar a Reserva\n");
-        printf("5 - Sair\n\n");
-        printf("Escolha uma op√ß√£o para prosseguir: ");
-        scanf("%d", &selecione);
-
-        // menu com as op√ß√µes disponiveis
-
-        switch (selecione) {
-            case 1: // cada case √© uma das op√ß√µes a cima
-                limpar_Tela(); //limpa a tela
-                printf("Voc√™ selecionou a Op√ß√£o 1 - Quartos Dispon√≠veis\n\n"); //exibe essa mensagem e mostra as op√ß√µes disponiveis
-
-                int andar; // aqui come√ßa as op√ß√µes das op√ß√µes, por exemplo os andar do predio
-                printf("Selecione o andar (1¬∞, 2¬∞, 3¬∞, 4¬∞, 5¬∞): ");
-                scanf("%d", &andar);
-
-                if (andar >= 1 && andar <= 5) { // aqui vai fazer uma verifica√ß√£o para exibir a lista no for
-                    printf("\nQuartos dispon√≠veis no %d¬∞ andar:\n\n", andar);
-
-                    // Exibir os quartos dispon√≠veis no andar selecionado
-                    for (int quarto = 0; quarto < 10; quarto++) {
-                        if (quartos[andar - 1][quarto]) {
-                            printf("Quarto %d\n\n", quarto + 1);
-                            // Para continuar, decidir qual a melhor forma de colocar os pre√ßos
-                            // Por exemplo pre√ßo fixo por andar
-                            // Quanto mais alto mais caro
-                        }
-                    }
-                } else {
-                    printf("Andar inv√°lido !\n");
-                }
-
-                printf("Pressione Enter para voltar ao menu...");
-                getchar();
-                break;
-
-		case 2:
-                limpar_Tela();
-                printf("Voc√™ selecionou a Op√ß√£o 2 - Reservar um Quarto\n\n");
-
-                // continuar o c√≥digo
-
-                printf("Pressione Enter para voltar ao menu...");
-                getch();
-                break;
-
-            case 3:
-                limpar_Tela();
-                printf("Voc√™ selecionou a Op√ß√£o 3 - Cancelar a Reserva\n\n");
-
-                // continuar o c√≥digo
-
-                printf("Pressione Enter para voltar ao menu...");
-                getch();
-                break;
-
-            case 4:
-                limpar_Tela();
-                printf("Voc√™ selecionou a Op√ß√£o 4 - Consultar a Reserva\n\n");
-
-                // continuar o c√≥digo
-
-                printf("Pressione Enter para voltar ao menu...");
-                getch();
-                break;
-            case 5:
-
-                printf("Saindo do programa!\n\n");
-                break;
-            default:
-                limpar_Tela();
-                printf("Op√ß√£o inv√°lida. Tente novamente.\n\n");
-                printf("Pressione Enter para continuar...");
-                getch();
-        }
-
-        // Limpar o menu de entrada
-        while (getchar() != '\n');
-
-    } while (selecione != 5);
-
-        }
->>>>>>> 1849b65c5c3468b721b17774bf976297f9a19a1e
