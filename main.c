@@ -16,14 +16,15 @@ struct Quarto
     char data_checkin[11], data_checkout[11];
 };
 
-void limpar_Tela()
-{
-    system("cls"); // Limpa a tela no Windows deixa o codigo mais limpo
-}
 
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
+
+    void limpar_Tela(); //limpar tela, declarada
+
+    void desenhoM(); //Desenho de tela inicial, declarado
+    desenhoM(); //chamada de função
 
     int selecione;
 
@@ -461,4 +462,41 @@ int main()
 
         // Se o usuário não selecionou um hotel válido, continue pedindo a seleção do hotel
     } while (menu < 1 || menu > 3);
+}
+
+//funções criadas abaixo do main, para evitar poluição visual
+
+void limpar_Tela()
+{
+    system("cls || clear"); // Limpa a tela no Windows e linux deixa o codigo mais limpo
+}
+
+void desenhoM(){
+
+   printf("              ____________  \n");
+  printf("             //        / /\\ \n");
+  printf("            //        / /  \\ \n");
+  printf("           //________/ /    \\ \n");
+  printf("          //        / /      \\ \n");
+  printf("         //        / /        \\ \n");
+  printf("        //________/ /          \\ \n");
+  printf("       //        / /            \\ \n");
+  printf("      //        / /              \\ \n");
+  printf("     //________/ /                \\ \n");
+  printf("    //        / /__________________\\ \n");
+  printf("   //        / /       ________     \\ \n");
+  printf("  //        / /       /       /\\     \\ \n");
+  printf(" //________/ /_______/_______/__\\_____\\ \n");
+  printf(" | |    | |  _______  _____           _ \n");
+  printf(" | |    | | |  ___  ||_   _| ______  | | \n");
+  printf(" | |____| | | |   | |  | |  |   ___| | | \n");
+  printf(" |  ____  | | |   | |  | |  |  |___  | | \n");
+  printf(" | |    | | | |   | |  | |  |   ___| | | \n");
+  printf(" | |    | | | |___| |  | |  |  |___  | |______\n");
+  printf(" |_|    |_| |_______|  |_|  |______| |________|\n\n");
+
+  // Desenho que vai aparecer na tela inicial antes de iniciar o projeto
+  printf("Pressione Enter para continuar...");
+  getchar();
+
 }
