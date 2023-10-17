@@ -64,7 +64,7 @@ int main()
 
     do
     {
-        REFAZ:
+        REFAZ: //rótulo de salto para retornar ao menu hotéis
         limpar_Tela();
         printf("Bem vindo! Qual hotel gostaria de se hospedar?\n\n");
         printf("1- Hotel Tokyo\n");
