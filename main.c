@@ -21,9 +21,10 @@ int main()
 {
     setlocale(LC_ALL, "Portuguese");
 
-    void limpar_Tela(); //limpar tela, declarada
-
-    void desenhoM(); //Desenho de tela inicial, declarado
+    //funções sendo declaradas, estruturas estão no final do code
+    void limpar_Tela();
+    
+    void desenhoM(); //Desenho de tela inicial
     desenhoM(); //chamada de função
 
     int selecione;
