@@ -5,9 +5,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <locale.h>
+#include <stdlib.h> 
 
 int selecione, x, menu;
-char *nome[4];
 
 // Definição da struct para representar um quarto
 struct Quarto
@@ -34,10 +34,9 @@ int main()
     void desenhoM(); //Desenho de tela inicial
     desenhoM(); //chamada de função
 
-    int menu2(); // Função para o menu secundario
-    void senha2(); // Função para senha de acesso ao menu secundario
-
-    void nHotel(); // Função para definir o nome do hotel na consulta, *incompleto*
+    int menu1(); // Função para o primeiro menu
+    int menu2(int hotel); // Função para o menu secundario
+    void senha1(); // Função para senha de acesso ao menu secundario
     
 
      for (int i = 0; i < 5; i++)
@@ -76,22 +75,14 @@ int main()
     do
     {
         REFAZ: //rótulo de salto para retornar ao menu hotéis (label)
-        limpar_Tela();
-        printf("Bem vindo! Qual hotel gostaria de se hospedar?\n\n");
-        printf("1- Hotel Tokyo\n");
-        printf("2- Hotel Holandes\n");
-        printf("3- Hotel Miles Morales\n");
-        printf("4- Sair\n");
-
-        printf("\nDigite uma opção para continuar: ");
-        scanf("%d", &menu);
+        menu1(); // chamada de função, primeiro menu
 
         switch (menu)
         {
         case 1:
             printf("Você selecionou o Hotel Tokyo\n");
 
-            senha2(); //chamada de função, senha
+            senha1(); //chamada de função, senha
             menu2(menu); //chamada de função, menu secundario
 
           if(x==0)
@@ -103,7 +94,7 @@ int main()
         case 2:
             printf("Você selecionou o Hotel Holandes\n");
 
-            senha2();
+            senha1();
             menu2(menu);
 
           if(x==0)
@@ -115,7 +106,7 @@ int main()
         case 3:
             printf("Você selecionou o Hotel Miles Morales\n");
 
-             senha2();
+             senha1();
             menu2(menu);
 
           if(x==0)
@@ -144,37 +135,24 @@ int main()
 
 //funções criadas abaixo do main, para evitar poluição visual
 
-void desenhoM(){
 
-   printf("              ____________  \n");
-  printf("             //        / /\\ \n");
-  printf("            //        / /  \\ \n");
-  printf("           //________/ /    \\ \n");
-  printf("          //        / /      \\ \n");
-  printf("         //        / /        \\ \n");
-  printf("        //________/ /          \\ \n");
-  printf("       //        / /            \\ \n");
-  printf("      //        / /              \\ \n");
-  printf("     //________/ /                \\ \n");
-  printf("    //        / /__________________\\ \n");
-  printf("   //        / /       ________     \\ \n");
-  printf("  //        / /       /       /\\     \\ \n");
-  printf(" //________/ /_______/_______/__\\_____\\ \n");
-  printf(" | |    | |  _______  _____           _ \n");
-  printf(" | |    | | |  ___  ||_   _| ______  | | \n");
-  printf(" | |____| | | |   | |  | |  |   ___| | | \n");
-  printf(" |  ____  | | |   | |  | |  |  |___  | | \n");
-  printf(" | |    | | | |   | |  | |  |   ___| | | \n");
-  printf(" | |    | | | |___| |  | |  |  |___  | |______\n");
-  printf(" |_|    |_| |_______|  |_|  |______| |________|\n\n");
 
-  // Desenho que vai aparecer na tela inicial antes de iniciar o projeto
-  printf("Pressione Enter para continuar...");
-  getchar();
+int menu1() {
 
+  limpar_Tela();
+  printf("Bem vindo! Qual hotel gostaria de se hospedar?\n\n");
+  printf("1- Hotel São Paulo\n");
+  printf("2- Hotel Rio de janeiro\n");
+  printf("3- Hotel Salvador\n");
+  printf("4- Sair\n");
+
+  printf("\nDigite uma opção para continuar: ");
+  scanf("%d", &menu);
+
+  return menu;
 }
 
-void senha2(){
+void senha1(){
 
   int senha;
   int senha_correta = false;
@@ -197,18 +175,10 @@ void senha2(){
   
 }
 
-void nHotel(){
-
-  nome[0] = "";
-  nome[1] = "Hotel Tokyo";
-  nome[2] = "Hotel Holandes";
-  nome[3] = "Hotel Miles Morales";
-
-  printf("%s\n", nome[menu]);
-}
 
 int menu2(int hotel){
-    
+
+     char *nome[] = {"Hotel Salvador", "Hotel São Paulo", "Hotel Rio de janeiro"}; // Nome dos hotéis para consulta de reserva, não alterar a ordem
 
   do
   {
@@ -399,7 +369,7 @@ int menu2(int hotel){
                   if (!quartos[i][j][k].disponivel && strcmp(quartos[i][j][k].cpf_cliente, cpf_consulta) == 0)
                   {
                       printf("\nReserva encontrada: ");
-                      nHotel();
+                      printf("%s\n", nome[k]);
                       printf("\n");
                       printf("Andar: %d\n", quartos[i][j][k].andar);
                       printf("Número do Quarto: %d\n", quartos[i][j][k].numero);
@@ -562,4 +532,34 @@ int menu2(int hotel){
     x=1;
 
   return x;
+}
+
+void desenhoM(){
+
+   printf("              ____________  \n");
+  printf("             //        / /\\ \n");
+  printf("            //        / /  \\ \n");
+  printf("           //________/ /    \\ \n");
+  printf("          //        / /      \\ \n");
+  printf("         //        / /        \\ \n");
+  printf("        //________/ /          \\ \n");
+  printf("       //        / /            \\ \n");
+  printf("      //        / /              \\ \n");
+  printf("     //________/ /                \\ \n");
+  printf("    //        / /__________________\\ \n");
+  printf("   //        / /       ________     \\ \n");
+  printf("  //        / /       /       /\\     \\ \n");
+  printf(" //________/ /_______/_______/__\\_____\\ \n");
+  printf(" | |    | |  _______  _____           _ \n");
+  printf(" | |    | | |  ___  ||_   _| ______  | | \n");
+  printf(" | |____| | | |   | |  | |  |   ___| | | \n");
+  printf(" |  ____  | | |   | |  | |  |  |___  | | \n");
+  printf(" | |    | | | |   | |  | |  |   ___| | | \n");
+  printf(" | |    | | | |___| |  | |  |  |___  | |______\n");
+  printf(" |_|    |_| |_______|  |_|  |______| |________|\n\n");
+
+  // Desenho que vai aparecer na tela inicial antes de iniciar o projeto
+  printf("Pressione Enter para continuar...");
+  getchar();
+
 }
