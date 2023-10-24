@@ -15,7 +15,7 @@ struct Quarto
     bool disponivel;
     int andar, numero;
     double preco;
-    char nome_cliente[100], cpf_cliente[15];
+    char nome_cliente[100], cpf_cliente[15], nomeF[30];
     char data_checkin[11], data_checkout[11];
 } quartos[5][10][3]; // Inicialização dos quartos em uma array de structs;
 
@@ -29,15 +29,22 @@ int main()
 {
     setlocale(LC_ALL, "Portuguese");
 
-    //funções sendo declaradas, seus codes estão no final do code
+     char *nomeP, nomeF[30]; // Variáveis para login do funcionário, ponteiro e endereço
+     nomeP = &nomeF[0];
+
+    //funções sendo declaradas, seus codes estão no final do programa
     
     void desenhoM(); //Desenho de tela inicial
+    INICIO: // Label para retornar a tela inicial
     desenhoM(); //chamada de função
 
     int menu1(); // Função para o primeiro menu
-    int menu2(int hotel); // Função para o menu secundario
+    int menu2(int hotel, char *nomeP); // Função para o menu secundario
     void senha1(); // Função para senha de acesso ao menu secundario
-    
+
+    int termosDeUso();
+    void textoP(); // política de privacidade
+    void textoT(); // termos de uso
 
      for (int i = 0; i < 5; i++)
     {
@@ -74,53 +81,67 @@ int main()
 
     do
     {
+         termosDeUso();
+
+        if (x == 1)
+        goto INICIO;
+        
         REFAZ: //rótulo de salto para retornar ao menu hotéis (label)
         menu1(); // chamada de função, primeiro menu
 
         switch (menu)
         {
         case 1:
-            printf("Você selecionou o Hotel Tokyo\n");
+            limpar_Tela();
+            printf("Você selecionou o Hotel São Paulo\n\n");
+
+            printf("\tLogin de funcionário\n\n");
+            printf("\nDigite o nome do funcionário: ");
+            scanf(" %29[^\n]", nomeF);
 
             senha1(); //chamada de função, senha
-            menu2(menu); //chamada de função, menu secundario
+            menu2(menu, &nomeF[0]); //chamada de função, menu secundario
 
-          if(x==0)
-            continue;
-          else if(x==1)
-            goto REFAZ; //volta para o menu inicial
+            if(x==1)
+               goto REFAZ; //volta para o menu inicial
 
             break;
         case 2:
-            printf("Você selecionou o Hotel Holandes\n");
+            limpar_Tela();
+            printf("Você selecionou o Hotel Rio de janeiro\n\n");
+
+            printf("\tLogin de funcionário\n\n");
+            printf("\nDigite o nome do funcionário: ");
+            scanf(" %29[^\n]", nomeF);
 
             senha1();
-            menu2(menu);
+            menu2(menu, &nomeF[0]);
 
-          if(x==0)
-            continue;
-          else if(x==1)
-            goto REFAZ;
+            if (x == 1)
+               goto REFAZ;
             
             break;
         case 3:
-            printf("Você selecionou o Hotel Miles Morales\n");
+             limpar_Tela();
+             printf("Você selecionou o Hotel Salvador\n\n");
 
-             senha1();
-            menu2(menu);
+             printf("\tLogin de funcionário\n\n");
+             printf("\nDigite o nome do funcionário: ");
+             scanf(" %29[^\n]", nomeF);
+ 
+            senha1();
+            menu2(menu, &nomeF[0]);
 
-          if(x==0)
-            continue;
-          else if(x==1)
-            goto REFAZ;
+            if (x == 1)
+                goto REFAZ;
             
             break;
         case 4:
-            printf("Saindo do programa!\n\n");
+            printf("\nSaindo do programa!\n\n");
             return 0; // Encerra o programa imediatamente
         default:
-            printf("Opção inválida. Tente novamente.\n\n");
-            printf("Pressione Enter para continuar...");
+            printf("\n\nOpção inválida. Tente novamente.\n\n");
+            printf("\nPressione Enter para continuar...");
             getchar();
             break;
         }
@@ -135,7 +156,76 @@ int main()
 
 //funções criadas abaixo do main, para evitar poluição visual
 
+int termosDeUso() {
 
+POL:
+  limpar_Tela();
+  printf("\n\tPolítica de Privacidade de Dados:\n");
+  textoP();
+  printf("\n\n\tTermos de uso:\n");
+  textoT();
+
+  printf("\nPressione Enter para continuar...");
+  getchar();
+  while (getchar() != '\n')
+    ;
+
+  x = 0;
+
+  char senha[7];
+  char senha_correta = false;
+
+  do {
+    limpar_Tela();
+    printf("Você aceita os Termos e Condições de uso? \n(aceito/recuso): ");
+    scanf("%s", senha);
+    if (strcmp(senha, "aceito") == 0 || strcmp(senha, "Aceito") == 0) {
+
+      senha_correta = true;
+    } else {
+      printf("\n\nNão é possível prosseguir sem aceitar os Termos e Condições "
+             "de uso.\n\n");
+
+      printf("\nPressione Enter para continuar...");
+      getchar();
+      while (getchar() != '\n')
+        ;
+
+      do {
+        limpar_Tela();
+        printf("\n1- Voltar a tela inicial.\n2- Voltar à Política de "
+               "Privacidade de Dados.\n\n");
+        printf("Escolha uma opção para prosseguir: ");
+        scanf("%d", &x);
+
+        switch (x) {
+        case 1:
+          limpar_Tela();
+          goto INICIO;
+          break;
+        case 2:
+          goto POL;
+          break;
+        default:
+          printf("\n\n>> Opção inválida, tente novamente. \n");
+
+          printf("\nPressione Enter para continuar...");
+          getchar();
+          while (getchar() != '\n')
+            ;
+        }
+      } while (x != 1 || x != 2);
+    }
+  } while (!senha_correta);
+
+  if (x == 0)
+    return x;
+
+INICIO:
+  x = 1;
+
+  return x;
+}
 
 int menu1() {
 
@@ -278,6 +368,7 @@ int menu2(int hotel){
                       quartos[andar_reserva - 1][quarto_reserva - 1][hotel].disponivel = false;
                       strcpy(quartos[andar_reserva - 1][quarto_reserva - 1][hotel].nome_cliente, nome_cliente);
                       strcpy(quartos[andar_reserva - 1][quarto_reserva - 1][hotel].cpf_cliente, cpf_cliente);
+                      strcpy(quartos[andar_reserva - 1][quarto_reserva - 1][hotel].nomeF, nomeP);
 
                       // Solicite a data de check-in
                       printf("\nDigite a data de check-in (dd/mm/yyyy): ");
@@ -331,6 +422,7 @@ int menu2(int hotel){
                       quartos[i][j][k].disponivel = true;
                       strcpy(quartos[i][j][k].nome_cliente, "");
                       strcpy(quartos[i][j][k].cpf_cliente, "");
+                      strcpy(quartos[i][j][k].nomeF, "");
                       reserva_encontrada = true;
                   }
                   }
@@ -370,6 +462,7 @@ int menu2(int hotel){
                   {
                       printf("\nReserva encontrada: ");
                       printf("%s\n", nome[k]);
+                      printf("Realiza por: %s\n", quartos[i][j][k].nomeF);
                       printf("\n");
                       printf("Andar: %d\n", quartos[i][j][k].andar);
                       printf("Número do Quarto: %d\n", quartos[i][j][k].numero);
@@ -432,6 +525,8 @@ int menu2(int hotel){
                       quarto_pago = quarto_cobranca - 1;
 
                       // Exibir informações detalhadas da reserva
+                      printf("Reserva realiza por: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].nomeF);
+                      printf("\n");
                       printf("Nome do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].nome_cliente);
                       printf("CPF do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].cpf_cliente);
                       printf("Preço: R$ %.2lf\n", quartos[andar_cobranca - 1][quarto_pago][hotel].preco);
@@ -451,6 +546,7 @@ int menu2(int hotel){
                           strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].cpf_cliente, "");
                           strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].data_checkin, "");
                           strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].data_checkout, "");
+                          strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].nomeF, "");
                       }
                   }
                   else
@@ -495,6 +591,7 @@ int menu2(int hotel){
                   {
                       printf("Nome do Cliente: %s\n", quartos[andar_relatorio - 1][quarto][hotel].nome_cliente);
                       printf("CPF do Cliente: %s\n", quartos[andar_relatorio - 1][quarto][hotel].cpf_cliente);
+                      printf("Reserva realiza por: %s\n", quartos[andar_relatorio - 1][quarto][hotel].nomeF);
                   }
                   printf("\n");
               }
@@ -563,3 +660,6 @@ void desenhoM(){
   getchar();
 
 }
+
+void textoP() {}
+void textoT() {}
