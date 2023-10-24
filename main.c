@@ -8,7 +8,7 @@
 
 int selecione, x, menu;
 
-// Definição da struct para representar um quarto
+// DefiniÃ§Ã£o da struct para representar um quarto
 struct Quarto
 {
     bool disponivel;
@@ -16,26 +16,26 @@ struct Quarto
     double preco;
     char nome_cliente[100], cpf_cliente[15];
     char data_checkin[11], data_checkout[11];
-} quartos[5][10][3]; // Inicialização dos quartos em uma array de structs;
+} quartos[5][10][3]; // InicializaÃ§Ã£o dos quartos em uma array de structs;
 
 void limpar_Tela()
 {
     system("cls || clear"); // Limpa a tela no Windows e linux deixa o codigo mais limpo
 }
 
-// A cima do main estão variaves e funções globais
+// A cima do main estÃ£o variaves e funÃ§Ãµes globais
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
 
-    //funções sendo declaradas, seus codes estão no final do code
+    //funÃ§Ãµes sendo declaradas, seus codes estÃ£o no final do code
 
     void desenhoM(); //Desenho de tela inicial
-    desenhoM(); //chamada de função
+    desenhoM(); //chamada de funÃ§Ã£o
 
-    int menu1(); // Função para o primeiro menu
-    int menu2(int hotel); // Função para o menu secundario
-    void senha1(); // Função para senha de acesso ao menu secundario
+    int menu1(); // FunÃ§Ã£o para o primeiro menu
+    int menu2(int hotel); // FunÃ§Ã£o para o menu secundario
+    void senha1(); // FunÃ§Ã£o para senha de acesso ao menu secundario
 
 
      for (int i = 0; i < 5; i++)
@@ -49,7 +49,7 @@ int main()
             quartos[i][j][k].numero = j + 1;
 
             switch (i + 1)
-            { // preços por andar
+            { // preÃ§os por andar
             case 1:
                 quartos[i][j][k].preco = 500.00;
                 break;
@@ -73,16 +73,16 @@ int main()
 
     do
     {
-        REFAZ: //rótulo de salto para retornar ao menu hotéis (label)
-        menu1(); // chamada de função, primeiro menu
+        REFAZ: //rÃ³tulo de salto para retornar ao menu hotÃ©is (label)
+        menu1(); // chamada de funÃ§Ã£o, primeiro menu
 
         switch (menu)
         {
         case 1:
-            printf("Você selecionou o Hotel Tokyo\n");
+            printf("VocÃª selecionou o Hotel Tokyo\n");
 
-            senha1(); //chamada de função, senha
-            menu2(menu); //chamada de função, menu secundario
+            senha1(); //chamada de funÃ§Ã£o, senha
+            menu2(menu); //chamada de funÃ§Ã£o, menu secundario
 
           if(x==0)
             continue;
@@ -91,7 +91,7 @@ int main()
 
             break;
         case 2:
-            printf("Você selecionou o Hotel Holandes\n");
+            printf("VocÃª selecionou o Hotel Holandes\n");
 
             senha1();
             menu2(menu);
@@ -103,7 +103,7 @@ int main()
 
             break;
         case 3:
-            printf("Você selecionou o Hotel Miles Morales\n");
+            printf("VocÃª selecionou o Hotel Miles Morales\n");
 
              senha1();
             menu2(menu);
@@ -118,7 +118,7 @@ int main()
             printf("Saindo do programa!\n\n");
             return 0; // Encerra o programa imediatamente
         default:
-            printf("Opção inválida. Tente novamente.\n\n");
+            printf("OpÃ§Ã£o invÃ¡lida. Tente novamente.\n\n");
             printf("Pressione Enter para continuar...");
             getchar();
             break;
@@ -128,11 +128,11 @@ int main()
         while (getchar() != '\n')
             ;
 
-        // Se o usuário não selecionou um hotel válido, continue pedindo a seleção do hotel
+        // Se o usuÃ¡rio nÃ£o selecionou um hotel vÃ¡lido, continue pedindo a seleÃ§Ã£o do hotel
     } while (menu < 1 || menu > 3);
 }
 
-//funções criadas abaixo do main, para evitar poluição visual
+//funÃ§Ãµes criadas abaixo do main, para evitar poluiÃ§Ã£o visual
 
 
 
@@ -140,12 +140,12 @@ int menu1() {
 
   limpar_Tela();
   printf("Bem vindo! Qual hotel gostaria de se hospedar?\n\n");
-  printf("1- Hotel São Paulo\n");
+  printf("1- Hotel SÃ£o Paulo\n");
   printf("2- Hotel Rio de janeiro\n");
   printf("3- Hotel Salvador\n");
   printf("4- Sair\n");
 
-  printf("\nDigite uma opção para continuar: ");
+  printf("\nDigite uma opÃ§Ã£o para continuar: ");
   scanf("%d", &menu);
 
   return menu;
@@ -177,20 +177,20 @@ void senha1(){
 
 int menu2(int hotel){
 
-     char *nome[] = {"Hotel Salvador", "Hotel São Paulo", "Hotel Rio de janeiro"}; // Nome dos hotéis para consulta de reserva, não alterar a ordem
+     char *nome[] = {"Hotel Salvador", "Hotel SÃ£o Paulo", "Hotel Rio de janeiro"}; // Nome dos hotÃ©is para consulta de reserva, nÃ£o alterar a ordem
 
   do
   {
       limpar_Tela();
-      printf("Menu de Opções:\n\n");
-      printf("1 - Quartos Disponíveis\n");
+      printf("Menu de OpÃ§Ãµes:\n\n");
+      printf("1 - Quartos DisponÃ­veis\n");
       printf("2 - Reservar um Quarto\n");
       printf("3 - Cancelar a Reserva\n");
       printf("4 - Consultar a Reserva\n");
-      printf("5 - Gerar Cobrança\n");
-      printf("6 - Gerar Relatórios\n");
-      printf("7 - Voltar para a seleção de hotéis\n\n");
-      printf("Escolha uma opção para prosseguir: ");
+      printf("5 - Gerar CobranÃ§a\n");
+      printf("6 - Gerar RelatÃ³rios\n");
+      printf("7 - Voltar para a seleÃ§Ã£o de hotÃ©is\n\n");
+      printf("Escolha uma opÃ§Ã£o para prosseguir: ");
       scanf("%d", &selecione);
 
       switch (selecione)
@@ -198,35 +198,35 @@ int menu2(int hotel){
       case 1:
 
           limpar_Tela();
-          printf("Você selecionou a Opção 1 - Quartos Disponíveis\n\n");
+          printf("VocÃª selecionou a OpÃ§Ã£o 1 - Quartos DisponÃ­veis\n\n");
 
           int andar;
-          printf("Selecione o andar (1°, 2°, 3°, 4°, 5°): ");
+          printf("Selecione o andar (1Â°, 2Â°, 3Â°, 4Â°, 5Â°): ");
           scanf("%d", &andar);
 
           if (andar >= 1 && andar <= 5)
           {
-              printf("\nQuartos disponíveis no %d° andar:\n\n", andar);
+              printf("\nQuartos disponÃ­veis no %dÂ° andar:\n\n", andar);
 
               for (int quarto = 0; quarto < 10; quarto++)
               {
                   if (quartos[andar - 1][quarto][hotel].disponivel)
                   {
                       printf("Quarto %d\n", quartos[andar - 1][quarto][hotel].numero);
-                      printf("Disponível\n");
-                      printf("Preço: R$ %.2lf\n", quartos[andar - 1][quarto][hotel].preco);
+                      printf("DisponÃ­vel\n");
+                      printf("PreÃ§o: R$ %.2lf\n", quartos[andar - 1][quarto][hotel].preco);
                   }
                   else
                   {
                       printf("Quarto %d\n", quartos[andar - 1][quarto][hotel].numero);
-                      printf("Indisponível\n");
+                      printf("IndisponÃ­vel\n");
                   }
                   printf("\n");
               }
           }
           else
           {
-              printf("Andar inválido!\n");
+              printf("Andar invÃ¡lido!\n");
           }
 
           printf("Pressione Enter para voltar ao menu...");
@@ -236,7 +236,7 @@ int menu2(int hotel){
       case 2:
 
           limpar_Tela();
-          //printf("Você selecionou a Opção 2 - Reservar um Quarto\n\n");
+          //printf("VocÃª selecionou a OpÃ§Ã£o 2 - Reservar um Quarto\n\n");
 
           char nome_cliente[100];
           char cpf_cliente[15];
@@ -248,12 +248,12 @@ int menu2(int hotel){
           scanf(" %14s", cpf_cliente);
 
           int andar_reserva, quarto_reserva;
-          printf("\nSelecione o andar (1°, 2°, 3°, 4°, 5°): ");
+          printf("\nSelecione o andar (1Â°, 2Â°, 3Â°, 4Â°, 5Â°): ");
           scanf("%d", &andar_reserva);
 
           if (andar_reserva >= 1 && andar_reserva <= 5)
           {
-              printf("\nQuartos disponíveis no %d° andar:\n\n", andar_reserva);
+              printf("\nQuartos disponÃ­veis no %dÂ° andar:\n\n", andar_reserva);
               bool quartos_disponiveis_reserva = false;
 
               for (int quarto = 0; quarto < 10; quarto++)
@@ -262,14 +262,14 @@ int menu2(int hotel){
                   {
                       quartos_disponiveis_reserva = true;
                       printf("Quarto %d\n", quartos[andar_reserva - 1][quarto][hotel].numero);
-                      printf("Preço: R$ %.2lf\n", quartos[andar_reserva - 1][quarto][hotel].preco);
-                      printf("Disponível\n\n");
+                      printf("PreÃ§o: R$ %.2lf\n", quartos[andar_reserva - 1][quarto][hotel].preco);
+                      printf("DisponÃ­vel\n\n");
                   }
               }
 
               if (quartos_disponiveis_reserva)
               {
-                  printf("Escolha o número do quarto desejado: ");
+                  printf("Escolha o nÃºmero do quarto desejado: ");
                   scanf("%d", &quarto_reserva);
 
                   if (quarto_reserva >= 1 && quarto_reserva <= 10 && quartos[andar_reserva - 1][quarto_reserva - 1][hotel].disponivel)
@@ -291,17 +291,17 @@ int menu2(int hotel){
                   }
                   else
                   {
-                      printf("Quarto selecionado não está disponível ou é inválido.\n");
+                      printf("Quarto selecionado nÃ£o estÃ¡ disponÃ­vel ou Ã© invÃ¡lido.\n");
                   }
               }
               else
               {
-                  printf("Nenhum quarto disponível neste andar para reserva.\n");
+                  printf("Nenhum quarto disponÃ­vel neste andar para reserva.\n");
               }
           }
           else
           {
-              printf("Andar inválido!\n");
+              printf("Andar invÃ¡lido!\n");
           }
 
           printf("\nPressione Enter para voltar ao menu...");
@@ -311,7 +311,7 @@ int menu2(int hotel){
       case 3:
 
           limpar_Tela();
-          printf("Você selecionou a Opção 3 - Cancelar a Reserva\n\n");
+          printf("VocÃª selecionou a OpÃ§Ã£o 3 - Cancelar a Reserva\n\n");
 
           char cpf_cliente_cancelar[15];
 
@@ -342,7 +342,7 @@ int menu2(int hotel){
           }
           else
           {
-              printf("CPF inválido. Não foi possível encontrar a reserva.\n");
+              printf("CPF invÃ¡lido. NÃ£o foi possÃ­vel encontrar a reserva.\n");
           }
 
           printf("\nPressione Enter para voltar ao menu...");
@@ -352,7 +352,7 @@ int menu2(int hotel){
       case 4:
 
           limpar_Tela();
-          printf("Você selecionou a Opção 4 - Consultar a Reserva\n\n");
+          printf("VocÃª selecionou a OpÃ§Ã£o 4 - Consultar a Reserva\n\n");
 
           char cpf_consulta[15];
           printf("Digite o CPF do cliente para consultar a reserva: ");
@@ -371,12 +371,12 @@ int menu2(int hotel){
                       printf("%s\n", nome[k]);
                       printf("\n");
                       printf("Andar: %d\n", quartos[i][j][k].andar);
-                      printf("Número do Quarto: %d\n", quartos[i][j][k].numero);
+                      printf("NÃºmero do Quarto: %d\n", quartos[i][j][k].numero);
                       printf("Nome do Cliente: %s\n", quartos[i][j][k].nome_cliente);
                       printf("CPF do Cliente: %s\n", quartos[i][j][k].cpf_cliente);
                       printf("Data de Check-in: %s\n", quartos[i][j][k].data_checkin);
                       printf("Data de Check-out: %s\n", quartos[i][j][k].data_checkout);
-                      // Chame a função precoF para exibir o preço atualizado
+                      // Chame a funÃ§Ã£o precoF para exibir o preÃ§o atualizado
                       precoF(&quartos[i][j][k]);
                       printf("\n");
                       reserva_encontrada_consulta = true;
@@ -387,7 +387,7 @@ int menu2(int hotel){
 
           if (!reserva_encontrada_consulta)
           {
-              printf("CPF inválido. Não foi possível encontrar a reserva.\n");
+              printf("CPF invÃ¡lido. NÃ£o foi possÃ­vel encontrar a reserva.\n");
           }
 
           printf("\nPressione Enter para voltar ao menu...");
@@ -397,19 +397,19 @@ int menu2(int hotel){
       case 5:
 
           limpar_Tela();
-          printf("Você selecionou a Opção 5 - Gerar Cobrança\n\n");
+          printf("VocÃª selecionou a OpÃ§Ã£o 5 - Gerar CobranÃ§a\n\n");
 
           int andar_cobranca;
-          printf("Digite o andar para gerar a cobrança (1°, 2°, 3°, 4°, 5°): ");
+          printf("Digite o andar para gerar a cobranÃ§a (1Â°, 2Â°, 3Â°, 4Â°, 5Â°): ");
           scanf("%d", &andar_cobranca);
 
           if (andar_cobranca >= 1 && andar_cobranca <= 5)
           {
-              // Variável para rastrear se há pelo menos um quarto ocupado no andar
+              // VariÃ¡vel para rastrear se hÃ¡ pelo menos um quarto ocupado no andar
               bool quarto_ocupado = false;
               int quarto_pago = -1;
 
-              printf("Quartos ocupados no %d° andar:\n\n", andar_cobranca);
+              printf("Quartos ocupados no %dÂ° andar:\n\n", andar_cobranca);
               for (int quarto = 0; quarto < 10; quarto++)
               {
                   if (!quartos[andar_cobranca - 1][quarto][hotel].disponivel)
@@ -424,18 +424,18 @@ int menu2(int hotel){
               if (quarto_ocupado)
               {
                   int quarto_cobranca;
-                  printf("Escolha o número do quarto para gerar a cobrança: ");
+                  printf("Escolha o nÃºmero do quarto para gerar a cobranÃ§a: ");
                   scanf("%d", &quarto_cobranca);
 
                   if (quarto_cobranca >= 1 && quarto_cobranca <= 10 && !quartos[andar_cobranca - 1][quarto_cobranca - 1][hotel].disponivel)
                   {
                       quarto_pago = quarto_cobranca - 1;
 
-                      // Exibir informações detalhadas da reserva
+                      // Exibir informaÃ§Ãµes detalhadas da reserva
                       printf("Nome do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].nome_cliente);
                       printf("CPF do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].cpf_cliente);
 
-                      // Chamando precoF para atualizar o preço
+                      // Chamando precoF para atualizar o preÃ§o
                       precoF(&quartos[andar_cobranca - 1][quarto_pago][hotel]);
 
                       printf("Data de Check-in: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].data_checkin);
@@ -443,12 +443,12 @@ int menu2(int hotel){
                       printf("\n");
 
                       int pagamento_confirmado;
-                      printf("Quarto %d pago? (1 para sim, 0 para não): ", quarto_cobranca);
+                      printf("Quarto %d pago? (1 para sim, 0 para nÃ£o): ", quarto_cobranca);
                       scanf("%d", &pagamento_confirmado);
 
                       if (pagamento_confirmado == 1)
                       {
-                          // Marcar o quarto como disponível novamente
+                          // Marcar o quarto como disponÃ­vel novamente
                           quartos[andar_cobranca - 1][quarto_pago][hotel].disponivel = true;
                           strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].nome_cliente, "");
                           strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].cpf_cliente, "");
@@ -458,17 +458,17 @@ int menu2(int hotel){
                   }
                   else
                   {
-                      printf("Quarto selecionado não está ocupado ou é inválido.\n");
+                      printf("Quarto selecionado nÃ£o estÃ¡ ocupado ou Ã© invÃ¡lido.\n");
                   }
               }
               else
               {
-                  printf("Nenhum quarto ocupado neste andar para gerar cobrança.\n");
+                  printf("Nenhum quarto ocupado neste andar para gerar cobranÃ§a.\n");
               }
           }
           else
           {
-              printf("Andar inválido!\n");
+              printf("Andar invÃ¡lido!\n");
           }
 
           printf("\nPressione Enter para voltar ao menu...");
@@ -478,24 +478,25 @@ int menu2(int hotel){
 
       case 6:
           limpar_Tela();
-          printf("Você selecionou a Opção 6 - Gerar Relatórios\n\n");
+          printf("VocÃª selecionou a OpÃ§Ã£o 6 - Gerar RelatÃ³rios\n\n");
 
           int andar_relatorio;
-          printf("Digite o andar para gerar o relatório (1°, 2°, 3°, 4°, 5°): ");
+          printf("Digite o andar para gerar o relatÃ³rio (1Â°, 2Â°, 3Â°, 4Â°, 5Â°): ");
           scanf("%d", &andar_relatorio);
 
           if (andar_relatorio >= 1 && andar_relatorio <= 5)
           {
               // Loop para percorrer os quartos do andar especificado e mostra na tela apenas
-              printf("Relatório de Quartos no %d° andar:\n\n", andar_relatorio);
+              printf("RelatÃ³rio de Quartos no %dÂ° andar:\n\n", andar_relatorio);
               for (int quarto = 0; quarto < 10; quarto++)
               {
                   printf("Andar: %d\n", quartos[andar_relatorio - 1][quarto][hotel].andar);
-                  printf("Número do Quarto: %d\n", quartos[andar_relatorio - 1][quarto][hotel].numero);
-                  printf("Disponibilidade: %s\n", quartos[andar_relatorio - 1][quarto][hotel].disponivel ? "Disponível" : "Indisponível");
+                  printf("NÃºmero do Quarto: %d\n", quartos[andar_relatorio - 1][quarto][hotel].numero);
+                  printf("Disponibilidade: %s\n", quartos[andar_relatorio - 1][quarto][hotel].disponivel ? "DisponÃ­vel" : "IndisponÃ­vel");
 
-                  double preco_atualizado = quartos[andar_relatorio - 1][quarto][hotel].preco;
-                  precoF(&quartos[andar_relatorio - 1][quarto][hotel]);
+                 precoF(&quartos[andar_relatorio - 1][quarto][hotel], hotel, nome[hotel]);
+
+
 
                   if (!quartos[andar_relatorio - 1][quarto][hotel].disponivel)
                   {
@@ -507,7 +508,7 @@ int menu2(int hotel){
           }
           else
           {
-              printf("Andar inválido!\n");
+              printf("Andar invÃ¡lido!\n");
           }
 
           printf("Pressione Enter para voltar ao menu...");
@@ -515,12 +516,12 @@ int menu2(int hotel){
           break;
 
       case 7:
-          goto REFAZ; //volta para onde a palavra estiver, usar a variavel com moderação!!!
+          goto REFAZ; //volta para onde a palavra estiver, usar a variavel com moderaÃ§Ã£o!!!
           break;
 
       default:
           limpar_Tela();
-          printf("Opção inválida. Tente novamente.\n\n");
+          printf("OpÃ§Ã£o invÃ¡lida. Tente novamente.\n\n");
           printf("Pressione Enter para continuar...");
           getchar();
       }
@@ -540,40 +541,46 @@ int menu2(int hotel){
   return x;
 }
 
-void precoF(struct Quarto *quarto)
+void precoF(struct Quarto *quarto, int hotel, const char *nome_hotel)
 {
-    // Obtenha a data atual
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    char data_atual[11];
-    sprintf(data_atual, "%04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
-
-    // Converter datas para o formato ano-mês-dia (yyyy-mm-dd) para facilitar a comparação
-    int ano_checkin, mes_checkin, dia_checkin;
-    int ano_checkout, mes_checkout, dia_checkout;
-    int ano_atual, mes_atual, dia_atual;
-
-    sscanf(quarto->data_checkin, "%d/%d/%d", &dia_checkin, &mes_checkin, &ano_checkin);
-    sscanf(quarto->data_checkout, "%d/%d/%d", &dia_checkout, &mes_checkout, &ano_checkout);
-    sscanf(data_atual, "%d-%d-%d", &ano_atual, &mes_atual, &dia_atual);
-
-    // Calcule a diferença de dias
-    int dias_restantes = (ano_checkout - ano_atual) * 365 + (mes_checkout - mes_atual) * 30 + (dia_checkout - dia_atual);
-
-    // Calcule o preço com base nas semanas adicionais (após a primeira semana)
-    double preco_atualizado = quarto->preco;
-
-    if (dias_restantes > 7)
+    // Verificar se o quarto estÃ¡ reservado
+    if (!quarto->disponivel)
     {
-        int dias_excedentes = dias_restantes - 7;
-        int semanas_adicionais = (dias_excedentes + 5) / 6; // Arredondamento para cima
+        // Obtenha a data atual
+        time_t t = time(NULL);
+        struct tm tm = *localtime(&t);
+        char data_atual[11];
+        sprintf(data_atual, "%04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
 
-        preco_atualizado += semanas_adicionais * (0.10 * quarto->preco); // 10% a mais por semana adicional
+        // Converter datas para o formato ano-mÃªs-dia (yyyy-mm-dd) para facilitar a comparaÃ§Ã£o
+        int ano_checkin, mes_checkin, dia_checkin;
+        int ano_checkout, mes_checkout, dia_checkout;
+        int ano_atual, mes_atual, dia_atual;
+
+        sscanf(quarto->data_checkin, "%d/%d/%d", &dia_checkin, &mes_checkin, &ano_checkin);
+        sscanf(quarto->data_checkout, "%d/%d/%d", &dia_checkout, &mes_checkout, &ano_checkout);
+        sscanf(data_atual, "%d-%d-%d", &ano_atual, &mes_atual, &dia_atual);
+
+        // Calcule a diferenÃ§a de dias
+        int dias_restantes = (ano_checkout - ano_atual) * 365 + (mes_checkout - mes_atual) * 30 + (dia_checkout - dia_atual);
+
+        // Calcule o preÃ§o com base nas semanas adicionais (apÃ³s a primeira semana)
+        double preco_atualizado = quarto->preco;
+
+        if (dias_restantes > 7)
+        {
+            int dias_excedentes = dias_restantes - 7;
+            int semanas_adicionais = (dias_excedentes + 5) / 6; // Arredondamento para cima
+
+            preco_atualizado += semanas_adicionais * (0.10 * quarto->preco); // 10% a mais por semana adicional
+        }
+
+        // Exibir o preÃ§o atualizado apenas para quartos reservados
+        printf("PreÃ§o:R$ %.2lf\n", preco_atualizado);
     }
-
-    // Exibir o preço atualizado
-    printf("Preço do quarto: R$ %.2lf\n", preco_atualizado);
 }
+
+
 
 
 
