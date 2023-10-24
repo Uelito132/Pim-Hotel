@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1698148347 source:c:\users\mkt\onedrive\Área de trabalho\pim-24.10.2023\main.c
+	<time.h>
+	<stdio.h>
+	<stdbool.h>
+	<string.h>
+	<ctype.h>
+	<locale.h>
+	<stdlib.h>
+
