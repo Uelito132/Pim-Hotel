@@ -248,7 +248,6 @@ void senha1(){
   int senha_correta = false;
   do
   {
-      limpar_Tela();
       printf("Digite sua senha de acesso:");
       scanf("%d", &senha);
       if (senha == 123)
