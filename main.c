@@ -658,7 +658,8 @@ void desenhoM(){
   // Desenho que vai aparecer na tela inicial antes de iniciar o projeto
   printf("Pressione Enter para continuar...");
   getchar();
-
+    
+  while (getchar() != '\n');
 }
 
 void textoP() {}
