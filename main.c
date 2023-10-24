@@ -266,7 +266,7 @@ void senha1(){
 }
 
 
-int menu2(int hotel){
+int menu2(int hotel, char *nomeP){
 
      char *nome[] = {"Hotel Salvador", "Hotel São Paulo", "Hotel Rio de janeiro"}; // Nome dos hotéis para consulta de reserva, não alterar a ordem
 
