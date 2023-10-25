@@ -24,6 +24,8 @@ void limpar_Tela()
     system("cls || clear"); // Limpa a tela no Windows e linux deixa o codigo mais limpo
 }
 
+int precoF(struct Quarto *quarto, int hotel, const char *nome_hotel); //Função dos aumentos nos valores
+
 // A cima do main estão variaves e funções globais
 int main()
 {
@@ -469,7 +471,8 @@ int menu2(int hotel, char *nomeP){
                       printf("CPF do Cliente: %s\n", quartos[i][j][k].cpf_cliente);
                       printf("Data de Check-in: %s\n", quartos[i][j][k].data_checkin);
                       printf("Data de Check-out: %s\n", quartos[i][j][k].data_checkout);
-                      printf("Preço: R$ %.2lf\n", quartos[i][j][k].preco);
+                      // Chame a função precoF para exibir o preço atualizado
+                      precoF(&quartos[i][j][k], menu, nome[hotel - 1]);
                       printf("\n");
                       reserva_encontrada_consulta = true;
                   }
@@ -528,7 +531,10 @@ int menu2(int hotel, char *nomeP){
                       printf("\n");
                       printf("Nome do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].nome_cliente);
                       printf("CPF do Cliente: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].cpf_cliente);
-                      printf("Preço: R$ %.2lf\n", quartos[andar_cobranca - 1][quarto_pago][hotel].preco);
+                      
+                      // Chamando precoF para atualizar o preço
+                      precoF(&quartos[andar_cobranca - 1][quarto_pago][hotel], hotel, nome[hotel]);
+                      
                       printf("Data de Check-in: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].data_checkin);
                       printf("Data de Check-out: %s\n", quartos[andar_cobranca - 1][quarto_pago][hotel].data_checkout);
                       printf("\n");
@@ -585,7 +591,9 @@ int menu2(int hotel, char *nomeP){
                   printf("Andar: %d\n", quartos[andar_relatorio - 1][quarto][hotel].andar);
                   printf("Número do Quarto: %d\n", quartos[andar_relatorio - 1][quarto][hotel].numero);
                   printf("Disponibilidade: %s\n", quartos[andar_relatorio - 1][quarto][hotel].disponivel ? "Disponível" : "Indisponível");
-                  printf("Preço: R$ %.2lf\n", quartos[andar_relatorio - 1][quarto][hotel].preco);
+                  
+                  precoF(&quartos[andar_relatorio - 1][quarto][hotel], hotel, nome[hotel]);
+                  
                   if (!quartos[andar_relatorio - 1][quarto][hotel].disponivel)
                   {
                       printf("Nome do Cliente: %s\n", quartos[andar_relatorio - 1][quarto][hotel].nome_cliente);
@@ -626,6 +634,53 @@ int menu2(int hotel, char *nomeP){
   
     REFAZ:
     x=1;
+
+  return x;
+}
+
+int precoF(struct Quarto *quarto, int hotel, const char *nome_hotel) {
+  // Verificar se o quarto está reservado
+  if (!quarto->disponivel) {
+    // Obtenha a data atual
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    char data_atual[11];
+    sprintf(data_atual, "%04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1,
+            tm.tm_mday);
+
+    // Converter datas para o formato ano-mês-dia (yyyy-mm-dd) para facilitar a
+    // comparação
+    int ano_checkin, mes_checkin, dia_checkin;
+    int ano_checkout, mes_checkout, dia_checkout;
+    int ano_atual, mes_atual, dia_atual;
+
+    sscanf(quarto->data_checkin, "%d/%d/%d", &dia_checkin, &mes_checkin,
+           &ano_checkin);
+    sscanf(quarto->data_checkout, "%d/%d/%d", &dia_checkout, &mes_checkout,
+           &ano_checkout);
+    sscanf(data_atual, "%d-%d-%d", &ano_atual, &mes_atual, &dia_atual);
+
+    // Calcule a diferença de dias
+    int dias_restantes = (ano_checkout - ano_atual) * 365 +
+                         (mes_checkout - mes_atual) * 30 +
+                         (dia_checkout - dia_atual);
+
+    // Calcule o preço com base nas semanas adicionais (após a primeira semana)
+    double preco_atualizado = quarto->preco;
+
+    if (dias_restantes > 7) {
+      int dias_excedentes = dias_restantes - 7;
+      int semanas_adicionais =
+          (dias_excedentes + 5) / 6; // Arredondamento para cima
+
+      preco_atualizado +=
+          semanas_adicionais *
+          (0.10 * quarto->preco); // 10% a mais por semana adicional
+    }
+
+    // Exibir o preço atualizado apenas para quartos reservados
+    printf("Preço:R$ %.2lf\n", preco_atualizado);
+  }
 
   return x;
 }
