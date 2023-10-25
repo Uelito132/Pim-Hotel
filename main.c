@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include <locale.h>
 #include <stdlib.h> 
+#include <time.h>
 
 int selecione, x, menu;
 
