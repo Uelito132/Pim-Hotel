@@ -35,12 +35,12 @@ int main() {
 
   // funções sendo declaradas, seus codes estão no final do programa
 
+   void valores(); // Valores iniciais dos quartos
+  valores(); // Deixar no inicío do code para não resetar as reservas!!!
+
   void desenhoM(); // Desenho de tela inicial
 INICIO:            // Label para retornar a tela inicial
-  desenhoM();      // chamada de função
-
-  void valores(); // Valores iniciais dos quartos
-  valores();
+  desenhoM();      // chamada de função 
 
   int menu1();                       // Função para o primeiro menu
   int menu2(int hotel, char *nomeP); // Função para o menu secundario
