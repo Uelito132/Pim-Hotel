@@ -10,6 +10,9 @@
 
 int selecione, x, menu, tentativa = 0;
 
+double preco_atualizado = 0, faturamento;
+double *precoP, *fatP;
+
 // Definição da struct para representar um quarto
 struct Quarto {
   bool disponivel;
@@ -17,6 +20,8 @@ struct Quarto {
   double preco;
   char nome_cliente[100], cpf_cliente[15], nomeF[30];
   char data_checkin[11], data_checkout[11];
+  double faturamento;
+  char email[50], contato[20], senha[7];
 } quartos[5][10][3]; // Inicialização dos quartos em uma array de structs;
 
 void limpar_Tela() {
@@ -29,8 +34,8 @@ void limpar_Tela() {
 int main() {
   setlocale(LC_ALL, "Portuguese");
 
-  char *nomeP,
-      nomeF[30]; // Variáveis para login do funcionário, ponteiro e endereço
+  // Variáveis para login do funcionário, ponteiro e endereço
+  char *nomeP, nomeF[30];
   nomeP = &nomeF[0];
 
   // funções sendo declaradas, seus codes estão no final do programa
@@ -43,8 +48,10 @@ int main() {
 INICIO:            // Label para retornar a tela inicial
   desenhoM();      // chamada de função
 
-  int menu1();                       // Função para o primeiro menu
-  int menu2(int hotel, char *nomeP); // Função para o menu secundario
+  // Função para o primeiro menu
+  int menu1();
+  // Função para o menu secundario
+  int menu2(int hotel, char *nomeP);
   int menu3(int hotel);
   int senha1(); // Função para senha de acesso ao menu secundario
 
@@ -52,156 +59,176 @@ INICIO:            // Label para retornar a tela inicial
 
   // Menu inicial
   limpar_Tela();
-  x=0;
-  tentativa=0;
-  printf("\n\tBem vindo ao Confort Haven!\n\n");
+  x = 0;
+  tentativa = 0;
+  do {
+    limpar_Tela();
 
-  printf("\n1- Entrar como hóspede.\n\n2- Entrar como funcionário.\n\n\n3- "
-         "Sair.\n\n");
-  printf("Escolha uma opção para prosseguir: ");
-  scanf("%d", &x);
+    printf("|-/--/--/-----------------------\\--\\--\\-|\n");
+    printf("\n\tBem vindo ao Confort Haven!\n\n");
+    printf("|-/--/--/-----------------------\\--\\--\\-|\n");
 
-  switch (x) {
+    printf(
+        "\n\n\t1- Entrar como hóspede.\n\n\t2- Entrar como funcionário.\n\n");
+    printf("_________________________________________\n");
 
-  case 1:
-    termosDeUso();
-    if (x == 1)
-      goto INICIO;
+    printf("\n3- Sair.\n");
+    printf("_________________________________________\n\n");
 
-    do {
+    printf("Escolha uma opção para prosseguir: ");
+    scanf("%d", &x);
 
-      x=0;
-      tentativa=0;
-      
-      menu1();
-      switch (menu) {
-      case 1:
-        menu3(menu);
-        if (x == 1)
+    switch (x) {
+    case 1:
+      termosDeUso();
+      limpar_Tela();
+      if (x == 1)
+        goto INICIO;
+
+      do {
+
+        limpar_Tela();
+        x = 0;
+        tentativa = 0;
+
+        menu1();
+        switch (menu) {
+        case 1:
+          menu3(menu);
+          if (x == 1)
+            limpar_Tela();
+          goto INICIO;
+          break;
+        case 2:
+          menu3(menu);
+          if (x == 1)
+            limpar_Tela();
+          goto INICIO;
+          break;
+        case 3:
+          menu3(menu);
+          if (x == 1)
+            limpar_Tela();
+          goto INICIO;
+          break;
+        case 4:
           limpar_Tela();
-        goto INICIO;
-        break;
-      case 2:
-        menu3(menu);
-        if (x == 1)
+          goto INICIO;
+        default:
+          printf("\n\nOpção inválida. Tente novamente.\n\n");
+          printf("\nPressione Enter para continuar...");
+          getchar();
+          break;
+        }
+        while (getchar() != '\n')
+          ;
+      } while (menu < 1 || menu > 3);
+      break;
+
+    case 2:
+      do {
+
+        x = 0;
+        tentativa = 0;
+
+      REFAZ:     // rótulo de salto para retornar ao menu hotéis (label)
+        menu1(); // chamada de função, primeiro menu
+
+        switch (menu) {
+        case 1:
           limpar_Tela();
-        goto INICIO;
-        break;
-      case 3:
-        menu3(menu);
-        if (x == 1)
+          x = 0;
+          tentativa = 0;
+          printf("|-/--/--/-----------------------\\--\\--\\-|\n\n");
+          printf("Você selecionou o Hotel São Paulo\n\n");
+
+          printf("\tLogin de funcionário\n\n");
+          printf("\nDigite o nome do funcionário: ");
+          scanf(" %29[^\n]", nomeF);
+
+          senha1(); // chamada de função, senha
           limpar_Tela();
-        goto INICIO;
-        break;
-      case 4:
-        limpar_Tela();
-        goto INICIO;
-      default:
-        printf("\n\nOpção inválida. Tente novamente.\n\n");
-        printf("\nPressione Enter para continuar...");
-        getchar();
-        break;
-      }
-    } while (menu < 1 || menu > 3);
-    break;
+          if (x == 1)
+            goto REFAZ;
 
-  case 2:
-    do {
+          // chamada de função, menu secundario
+          menu2(menu, &nomeF[0]);
+          if (x == 1)
+            goto REFAZ; // volta para o menu inicial
 
-      x = 0;
-      tentativa=0;
-      
-    REFAZ:     // rótulo de salto para retornar ao menu hotéis (label)
-      menu1(); // chamada de função, primeiro menu
+          break;
+        case 2:
+          limpar_Tela();
+          x = 0;
+          tentativa = 0;
+          printf("|-/--/--/-----------------------\\--\\--\\-|\n\n");
+          printf("Você selecionou o Hotel Rio de janeiro\n\n");
 
-      switch (menu) {
-      case 1:
-        limpar_Tela();
-        x=0;
-        tentativa=0;
-        printf("Você selecionou o Hotel São Paulo\n\n");
+          printf("\tLogin de funcionário\n\n");
+          printf("\nDigite o nome do funcionário: ");
+          scanf(" %29[^\n]", nomeF);
 
-        printf("\tLogin de funcionário\n\n");
-        printf("\nDigite o nome do funcionário: ");
-        scanf(" %29[^\n]", nomeF);
+          senha1();
+          limpar_Tela();
+          if (x == 1)
+            goto REFAZ;
 
-        senha1(); // chamada de função, senha
-        limpar_Tela();
-        if (x == 1)
-          goto REFAZ;
+          menu2(menu, &nomeF[0]);
+          if (x == 1)
+            goto REFAZ;
 
-        menu2(menu, &nomeF[0]); // chamada de função, menu secundario
-        if (x == 1)
-          goto REFAZ; // volta para o menu inicial
+          break;
+        case 3:
+          limpar_Tela();
+          x = 0;
+          tentativa = 0;
+          printf("|-/--/--/-----------------------\\--\\--\\-|\n\n");
+          printf("Você selecionou o Hotel Salvador\n\n");
 
-        break;
-      case 2:
-        limpar_Tela();
-        x=0;
-        tentativa=0;
-        printf("Você selecionou o Hotel Rio de janeiro\n\n");
+          printf("\tLogin de funcionário\n\n");
+          printf("\nDigite o nome do funcionário: ");
+          scanf(" %29[^\n]", nomeF);
 
-        printf("\tLogin de funcionário\n\n");
-        printf("\nDigite o nome do funcionário: ");
-        scanf(" %29[^\n]", nomeF);
+          senha1();
+          limpar_Tela();
+          if (x == 1)
+            goto REFAZ;
 
-        senha1();
-        limpar_Tela();
-        if (x == 1)
-          goto REFAZ;
+          menu2(menu, &nomeF[0]);
+          if (x == 1)
+            goto REFAZ;
 
-        menu2(menu, &nomeF[0]);
-        if (x == 1)
-          goto REFAZ;
+          break;
+        case 4:
+          limpar_Tela();
+          goto INICIO;
+        default:
+          printf("\n\nOpção inválida. Tente novamente.\n\n");
+          printf("\nPressione Enter para continuar...");
+          getchar();
+          break;
+        }
 
-        break;
-      case 3:
-        limpar_Tela();
-        x=0;
-        tentativa=0;
-        printf("Você selecionou o Hotel Salvador\n\n");
+        // Limpar o menu de entrada
+        while (getchar() != '\n')
+          ;
 
-        printf("\tLogin de funcionário\n\n");
-        printf("\nDigite o nome do funcionário: ");
-        scanf(" %29[^\n]", nomeF);
-
-        senha1();
-        limpar_Tela();
-        if (x == 1)
-          goto REFAZ;
-
-        menu2(menu, &nomeF[0]);
-        if (x == 1)
-          goto REFAZ;
-
-        break;
-      case 4:
-        limpar_Tela();
-        goto INICIO;
-      default:
-        printf("\n\nOpção inválida. Tente novamente.\n\n");
-        printf("\nPressione Enter para continuar...");
-        getchar();
-        break;
-      }
-
-      // Limpar o menu de entrada
-      while (getchar() != '\n')
-        ;
-
-      // Se o usuário não selecionou um hotel válido, continue pedindo a seleção
-      // do hotel
-    } while (menu < 1 || menu > 3);
-    break;
-  case 3:
-    printf("\nSaindo do programa!\n\n");
-    return 0; // Encerra o programa imediatamente
-  default:
-    printf("\n\nOpção inválida. Tente novamente.\n\n");
-    printf("\nPressione Enter para continuar...");
-    getchar();
-    break;
-  }
+        // Se o usuário não selecionou um hotel válido, continue pedindo a
+        // seleção do hotel
+      } while (menu < 1 || menu > 3);
+      break;
+    case 3:
+      printf("\nSaindo do programa!\n\n");
+      return 0; // Encerra o programa imediatamente
+    default:
+      printf("\n\nOpção inválida. Tente novamente.\n\n");
+      printf("\nPressione Enter para continuar...");
+      getchar();
+      break;
+    }
+    while (getchar() != '\n')
+      ;
+  } while (menu < 1 || menu > 3);
 }
 
 // Declaração de funções semi-globais, subordinadas de outras funções
@@ -219,8 +246,11 @@ int termosDeUso() {
 POL:
   limpar_Tela();
 
-  printf("\n1- Ler Política de Privacidade.\n2- Ler termos de uso.\n3- "
-         "Prosseguir para seleção de hotéis.\n\n");
+  printf("__________________________________________\n");
+  printf("\n\t1- Ler Política de Privacidade.\n\t2- Ler termos de uso.\n");
+  printf("__________________________________________\n");
+  printf("\n\t3- Prosseguir para seleção de hotéis.\n");
+  printf("__________________________________________\n\n");
   printf("Escolha uma opção para prosseguir: ");
   scanf("%d", &x);
 
@@ -305,6 +335,7 @@ INICIO:
 int menu1() {
 
   limpar_Tela();
+  printf("|-/--/--/-----------------------\\--\\--\\-|\n\n");
   printf("Qual hotel gostaria de consultar?\n\n");
   printf("1- Hotel São Paulo\n");
   printf("2- Hotel Rio de janeiro\n");
@@ -321,7 +352,7 @@ int senha1() {
 
   int senha;
   int senha_correta = false;
-  
+
   tentativa = 0;
 
   do {
@@ -358,6 +389,7 @@ int menu2(int hotel, char *nomeP) {
 
   do {
     limpar_Tela();
+    printf("|-/--/--/-----------------------\\--\\--\\-|\n\n");
     printf("Menu de Opções:\n\n");
     printf("1 - Quartos Disponíveis\n");
     printf("2 - Reservar um Quarto\n");
@@ -373,6 +405,7 @@ int menu2(int hotel, char *nomeP) {
     case 1:
 
       limpar_Tela();
+      printf("|-/--/--/-------------------------------------------------\n\n");
       printf("Você selecionou a Opção 1 - Quartos Disponíveis\n\n");
 
       int andar;
@@ -395,31 +428,43 @@ int menu2(int hotel, char *nomeP) {
           printf("\n");
         }
       } else {
-        printf("Andar inválido!\n");
+        printf("\nAndar inválido!\n");
       }
 
-      printf("Pressione Enter para voltar ao menu...");
+      printf("\nPressione Enter para voltar ao menu...");
       getchar();
       break;
 
     case 2:
 
       limpar_Tela();
+      printf("|-/--/--/-------------------------------------------------\n\n");
       // printf("Você selecionou a Opção 2 - Reservar um Quarto\n\n");
 
       char nome_cliente[100];
       char cpf_cliente[15];
+      char email[50], contato[20], senha[7];
       // checar se o cpf possuí a quantidade correta de caráter
       char cpf_if[] = "123.456.789-00";
 
       printf("Digite o nome do cliente: ");
       scanf(" %99[^\n]", nome_cliente);
 
-      printf("Digite o CPF do cliente: ");
+      printf("Digite o email do cliente (contato@email.com): ");
+      scanf(" %49[^\n]", email);
+
+      printf("Digite o telefone de contato [(00) 90000-0000]: ");
+      scanf(" %19[^\n]", contato);
+
+      printf("Digite o CPF do cliente (000.000.000-00): ");
       scanf(" %14s", cpf_cliente);
 
       if (strlen(cpf_cliente) == strlen(cpf_if)) {
 
+        printf("Digite uma senha de no max. 6 dígitos: ");
+        scanf(" %6[^\n]", senha);
+
+        limpar_Tela();
         int andar_reserva, quarto_reserva;
         printf("\nSelecione o andar (1°, 2°, 3°, 4°, 5°): ");
         scanf("%d", &andar_reserva);
@@ -457,6 +502,15 @@ int menu2(int hotel, char *nomeP) {
               strcpy(
                   quartos[andar_reserva - 1][quarto_reserva - 1][hotel].nomeF,
                   nomeP);
+              strcpy(
+                  quartos[andar_reserva - 1][quarto_reserva - 1][hotel].contato,
+                  contato);
+              strcpy(
+                  quartos[andar_reserva - 1][quarto_reserva - 1][hotel].email,
+                  email);
+              strcpy(
+                  quartos[andar_reserva - 1][quarto_reserva - 1][hotel].senha,
+                  senha);
 
               // Solicite a data de check-in
               printf("\nDigite a data de check-in (dd/mm/yyyy): ");
@@ -472,14 +526,16 @@ int menu2(int hotel, char *nomeP) {
 
               while (getchar() != '\n')
                 ;
+
             } else {
-              printf("Quarto selecionado não está disponível ou é inválido.\n");
+              printf(
+                  "\nQuarto selecionado não está disponível ou é inválido.\n");
             }
           } else {
-            printf("Nenhum quarto disponível neste andar para reserva.\n");
+            printf("\nNenhum quarto disponível neste andar para reserva.\n");
           }
         } else {
-          printf("Andar inválido!\n");
+          printf("\nAndar inválido!\n");
         }
       } else {
         printf("\nCPF inválido!");
@@ -492,6 +548,7 @@ int menu2(int hotel, char *nomeP) {
     case 3:
 
       limpar_Tela();
+      printf("|-/--/--/-------------------------------------------------\n\n");
       printf("Você selecionou a Opção 3 - Cancelar a Reserva\n\n");
 
       char cpf_cliente_cancelar[15];
@@ -510,7 +567,10 @@ int menu2(int hotel, char *nomeP) {
               quartos[i][j][k].disponivel = true;
               strcpy(quartos[i][j][k].nome_cliente, "");
               strcpy(quartos[i][j][k].cpf_cliente, "");
+              strcpy(quartos[i][j][k].email, "");
+              strcpy(quartos[i][j][k].contato, "");
               strcpy(quartos[i][j][k].nomeF, "");
+              strcpy(quartos[i][j][k].senha, "");
               reserva_encontrada = true;
             }
           }
@@ -518,9 +578,9 @@ int menu2(int hotel, char *nomeP) {
       }
 
       if (reserva_encontrada) {
-        printf("Reserva cancelada com sucesso.\n\n");
+        printf("\nReserva cancelada com sucesso.\n\n");
       } else {
-        printf("CPF inválido. Não foi possível encontrar a reserva.\n");
+        printf("\n\nCPF inválido. Não foi possível encontrar a reserva.\n");
       }
 
       printf("\nPressione Enter para voltar ao menu...");
@@ -530,6 +590,7 @@ int menu2(int hotel, char *nomeP) {
     case 4:
 
       limpar_Tela();
+      printf("|-/--/--/-------------------------------------------------\n\n");
       printf("Você selecionou a Opção 4 - Consultar a Reserva\n\n");
 
       char cpf_consulta[15];
@@ -551,6 +612,9 @@ int menu2(int hotel, char *nomeP) {
               printf("Número do Quarto: %d\n", quartos[i][j][k].numero);
               printf("Nome do Cliente: %s\n", quartos[i][j][k].nome_cliente);
               printf("CPF do Cliente: %s\n", quartos[i][j][k].cpf_cliente);
+              printf("Email do Cliente: %s\n", quartos[i][j][k].email);
+              printf("Telefone de contato do Cliente: %s\n",
+                     quartos[i][j][k].contato);
               printf("Data de Check-in: %s\n", quartos[i][j][k].data_checkin);
               printf("Data de Check-out: %s\n", quartos[i][j][k].data_checkout);
               // Chame a função precoF para exibir o preço atualizado
@@ -563,7 +627,7 @@ int menu2(int hotel, char *nomeP) {
       }
 
       if (!reserva_encontrada_consulta) {
-        printf("CPF inválido. Não foi possível encontrar a reserva.\n");
+        printf("\n\nCPF inválido. Não foi possível encontrar a reserva.\n");
       }
 
       printf("\nPressione Enter para voltar ao menu...");
@@ -573,6 +637,7 @@ int menu2(int hotel, char *nomeP) {
     case 5:
 
       limpar_Tela();
+      printf("|-/--/--/-------------------------------------------------\n\n");
       printf("Você selecionou a Opção 5 - Gerar Cobrança\n\n");
 
       int andar_cobranca;
@@ -584,7 +649,7 @@ int menu2(int hotel, char *nomeP) {
         bool quarto_ocupado = false;
         int quarto_pago = -1;
 
-        printf("Quartos ocupados no %d° andar:\n\n", andar_cobranca);
+        printf("\nQuartos ocupados no %d° andar:\n\n", andar_cobranca);
         for (int quarto = 0; quarto < 10; quarto++) {
           if (!quartos[andar_cobranca - 1][quarto][hotel].disponivel) {
             printf("Quarto %d\n",
@@ -614,6 +679,10 @@ int menu2(int hotel, char *nomeP) {
                 quartos[andar_cobranca - 1][quarto_pago][hotel].nome_cliente);
             printf("CPF do Cliente: %s\n",
                    quartos[andar_cobranca - 1][quarto_pago][hotel].cpf_cliente);
+            printf("Email do Cliente: %s\n",
+                   quartos[andar_cobranca - 1][quarto_pago][hotel].email);
+            printf("Telefone de contato do Cliente: %s\n",
+                   quartos[andar_cobranca - 1][quarto_pago][hotel].contato);
 
             // Chamando precoF para atualizar o preço
             precoF(&quartos[andar_cobranca - 1][quarto_pago][hotel], hotel,
@@ -633,6 +702,21 @@ int menu2(int hotel, char *nomeP) {
             scanf("%d", &pagamento_confirmado);
 
             if (pagamento_confirmado == 1) {
+
+              // Calcular faturamento
+              precoF(&quartos[andar_cobranca - 1][quarto_pago][hotel], hotel,
+                     nome[hotel]);
+
+              fatP = &faturamento;
+              precoP = &preco_atualizado;
+
+              double result = (*fatP) + (*precoP);
+
+              faturamento += result;
+
+              quartos[andar_cobranca - 1][quarto_pago][hotel].faturamento =
+                  *fatP;
+
               // Marcar o quarto como disponível novamente
               quartos[andar_cobranca - 1][quarto_pago][hotel].disponivel = true;
               strcpy(
@@ -648,15 +732,19 @@ int menu2(int hotel, char *nomeP) {
                   quartos[andar_cobranca - 1][quarto_pago][hotel].data_checkout,
                   "");
               strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].nomeF, "");
+              strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].email, "");
+              strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].contato,
+                     "");
+              strcpy(quartos[andar_cobranca - 1][quarto_pago][hotel].senha, "");
             }
           } else {
-            printf("Quarto selecionado não está ocupado ou é inválido.\n");
+            printf("\nQuarto selecionado não está ocupado ou é inválido.\n");
           }
         } else {
-          printf("Nenhum quarto ocupado neste andar para gerar cobrança.\n");
+          printf("\nNenhum quarto ocupado neste andar para gerar cobrança.\n");
         }
       } else {
-        printf("Andar inválido!\n");
+        printf("\nAndar inválido!\n");
       }
 
       printf("\nPressione Enter para voltar ao menu...");
@@ -665,44 +753,90 @@ int menu2(int hotel, char *nomeP) {
 
     case 6:
       limpar_Tela();
+      printf("|-/--/--/-------------------------------------------------\n\n");
       printf("Você selecionou a Opção 6 - Gerar Relatórios\n\n");
 
       int andar_relatorio;
-      printf("Digite o andar para gerar o relatório (1°, 2°, 3°, 4°, 5°): ");
-      scanf("%d", &andar_relatorio);
 
-      if (andar_relatorio >= 1 && andar_relatorio <= 5) {
-        // Loop para percorrer os quartos do andar especificado e mostra na tela
-        // apenas
-        printf("Relatório de Quartos no %d° andar:\n\n", andar_relatorio);
-        for (int quarto = 0; quarto < 10; quarto++) {
-          printf("Andar: %d\n",
-                 quartos[andar_relatorio - 1][quarto][hotel].andar);
-          printf("Número do Quarto: %d\n",
-                 quartos[andar_relatorio - 1][quarto][hotel].numero);
-          printf("Disponibilidade: %s\n",
-                 quartos[andar_relatorio - 1][quarto][hotel].disponivel
-                     ? "Disponível"
-                     : "Indisponível");
+      printf("\n1- Relatório dos andares.\n2- Faturamento.\n\nEscolha uma das "
+             "opções: ");
+      scanf("%d", &x);
 
-          precoF(&quartos[andar_relatorio - 1][quarto][hotel], hotel,
-                 nome[hotel]);
+      switch (x) {
 
-          if (!quartos[andar_relatorio - 1][quarto][hotel].disponivel) {
-            printf("Nome do Cliente: %s\n",
-                   quartos[andar_relatorio - 1][quarto][hotel].nome_cliente);
-            printf("CPF do Cliente: %s\n",
-                   quartos[andar_relatorio - 1][quarto][hotel].cpf_cliente);
-            printf("Reserva realiza por: %s\n",
-                   quartos[andar_relatorio - 1][quarto][hotel].nomeF);
+      case 1:
+        limpar_Tela();
+        printf("Digite o andar para gerar o relatório (1°, 2°, 3°, 4°, 5°): ");
+        scanf("%d", &andar_relatorio);
+
+        if (andar_relatorio >= 1 && andar_relatorio <= 5) {
+          // Loop para percorrer os quartos do andar especificado e mostra na
+          // tela apenas
+          printf("Relatório de Quartos no %d° andar:\n\n", andar_relatorio);
+          for (int quarto = 0; quarto < 10; quarto++) {
+            printf("Andar: %d\n",
+                   quartos[andar_relatorio - 1][quarto][hotel].andar);
+            printf("Número do Quarto: %d\n",
+                   quartos[andar_relatorio - 1][quarto][hotel].numero);
+            printf("Disponibilidade: %s\n",
+                   quartos[andar_relatorio - 1][quarto][hotel].disponivel
+                       ? "Disponível"
+                       : "Indisponível");
+
+            precoF(&quartos[andar_relatorio - 1][quarto][hotel], hotel,
+                   nome[hotel]);
+
+            if (!quartos[andar_relatorio - 1][quarto][hotel].disponivel) {
+              printf("Nome do Cliente: %s\n",
+                     quartos[andar_relatorio - 1][quarto][hotel].nome_cliente);
+              printf("CPF do Cliente: %s\n",
+                     quartos[andar_relatorio - 1][quarto][hotel].cpf_cliente);
+              printf("Email do Cliente: %s\n",
+                     quartos[andar_relatorio - 1][quarto][hotel].email);
+              printf("Telefone de contato do Cliente: %s\n",
+                     quartos[andar_relatorio - 1][quarto][hotel].contato);
+              printf("Reserva realiza por: %s\n",
+                     quartos[andar_relatorio - 1][quarto][hotel].nomeF);
+              printf("Reserva realiza por: %s\n",
+                     quartos[andar_relatorio - 1][quarto][hotel].senha);
+            }
+            printf("\n");
+          }
+        } else {
+          printf("Andar inválido!\n");
+        }
+        break;
+      case 2:
+        limpar_Tela();
+        printf("Digite o andar para gerar o relatório (1°, 2°, 3°, 4°, 5°): ");
+        scanf("%d", &andar_relatorio);
+
+        if (andar_relatorio >= 1 && andar_relatorio <= 5) {
+          // Loop para percorrer os quartos do andar especificado e mostra na
+          // tela apenas
+          printf("Relatório de Quartos no %d° andar:\n\n", andar_relatorio);
+          for (int quarto = 0; quarto < 10; quarto++) {
+            printf("Andar: %d\n",
+                   quartos[andar_relatorio - 1][quarto][hotel].andar);
+            printf("Número do Quarto: %d\n",
+                   quartos[andar_relatorio - 1][quarto][hotel].numero);
+            printf("Faturamento total do quarto: %.2lf\n\n",
+                   quartos[andar_relatorio - 1][quarto][hotel].faturamento);
           }
           printf("\n");
+
+        } else {
+          printf("Andar inválido!\n");
         }
-      } else {
-        printf("Andar inválido!\n");
+        break;
+      default:
+        limpar_Tela();
+        printf("\nOpção inválida. Tente novamente.\n\n");
+        printf("\nPressione Enter para continuar...");
+        getchar();
       }
 
-      printf("Pressione Enter para voltar ao menu...");
+      printf("\nPressione Enter para voltar ao menu...");
       getchar();
       break;
 
@@ -713,15 +847,14 @@ int menu2(int hotel, char *nomeP) {
 
     default:
       limpar_Tela();
-      printf("Opção inválida. Tente novamente.\n\n");
-      printf("Pressione Enter para continuar...");
+      printf("\nOpção inválida. Tente novamente.\n\n");
+      printf("\nPressione Enter para continuar...");
       getchar();
     }
 
     // Limpar o menu de entrada
     while (getchar() != '\n')
       ;
-
   } while (selecione != 7);
 
   if (x == 0)
@@ -752,8 +885,14 @@ int menu3(int hotel) {
       limpar_Tela();
       printf("Você selecionou a Opção 1 - Quartos Disponíveis\n\n");
 
+      printf("_________________________________________________________________"
+             "\n");
       printf("\nOBSERVAÇÃO!\n\nA cada 7 dias as reservas sofrem um aumento "
              "10%% no valor inicial.\n\n");
+      printf("Quartos do 1º andar são Standard.\nQuartos do 2º e 3º andar são "
+             "Master.\nQuartos do 4º e 5º andar são Deluxe.\n");
+      printf("_________________________________________________________________"
+             "\n\n\n");
 
       int andar;
       printf("Selecione o andar (1°, 2°, 3°, 4°, 5°): ");
@@ -775,7 +914,7 @@ int menu3(int hotel) {
           printf("\n");
         }
       } else {
-        printf("Andar inválido!\n");
+        printf("\nAndar inválido!\n");
       }
 
       printf("\nPressione Enter para voltar ao menu...");
@@ -786,9 +925,12 @@ int menu3(int hotel) {
       limpar_Tela();
       printf("Você selecionou a Opção 4 - Consultar a Reserva\n\n");
 
-      char cpf_consulta[15];
+      char cpf_consulta[15], senha_consulta[7];
       printf("Digite o CPF do cliente para consultar a reserva: ");
       scanf(" %14s", cpf_consulta);
+
+      printf("Digite a senha do cliente para consultar a reserva: ");
+      scanf(" %6[^\n]", senha_consulta);
 
       bool reserva_encontrada_consulta = false;
 
@@ -796,7 +938,8 @@ int menu3(int hotel) {
         for (int j = 0; j < 10; j++) {
           for (int k = 0; k < 3; k++) {
             if (!quartos[i][j][k].disponivel &&
-                strcmp(quartos[i][j][k].cpf_cliente, cpf_consulta) == 0) {
+                strcmp(quartos[i][j][k].cpf_cliente, cpf_consulta) == 0 &&
+                strcmp(quartos[i][j][k].senha, senha_consulta) == 0) {
               printf("\nReserva encontrada: ");
               printf("%s\n", nome[k]);
               printf("Realiza por: %s\n", quartos[i][j][k].nomeF);
@@ -804,7 +947,6 @@ int menu3(int hotel) {
               printf("Andar: %d\n", quartos[i][j][k].andar);
               printf("Número do Quarto: %d\n", quartos[i][j][k].numero);
               printf("Nome do Cliente: %s\n", quartos[i][j][k].nome_cliente);
-              printf("CPF do Cliente: %s\n", quartos[i][j][k].cpf_cliente);
               printf("Data de Check-in: %s\n", quartos[i][j][k].data_checkin);
               printf("Data de Check-out: %s\n", quartos[i][j][k].data_checkout);
               // Chame a função precoF para exibir o preço atualizado
@@ -817,7 +959,8 @@ int menu3(int hotel) {
       }
 
       if (!reserva_encontrada_consulta) {
-        printf("CPF inválido. Não foi possível encontrar a reserva.\n");
+        printf("\n\nCPF ou senha inválido. Não foi possível encontrar a "
+               "reserva.\n");
       }
 
       printf("\nPressione Enter para voltar ao menu...");
@@ -860,8 +1003,8 @@ int precoF(struct Quarto *quarto, int hotel, const char *nome_hotel) {
     sprintf(data_atual, "%04d-%02d-%02d", tm.tm_year + 1900, tm.tm_mon + 1,
             tm.tm_mday);
 
-    // Converter datas para o formato ano-mês-dia (yyyy-mm-dd) para facilitar a
-    // comparação
+    // Converter datas para o formato ano-mês-dia (yyyy-mm-dd) para
+    // facilitar a comparação
     int ano_checkin, mes_checkin, dia_checkin;
     int ano_checkout, mes_checkout, dia_checkout;
     int ano_atual, mes_atual, dia_atual;
@@ -877,8 +1020,9 @@ int precoF(struct Quarto *quarto, int hotel, const char *nome_hotel) {
                          (mes_checkout - mes_atual) * 30 +
                          (dia_checkout - dia_atual);
 
-    // Calcule o preço com base nas semanas adicionais (após a primeira semana)
-    double preco_atualizado = quarto->preco;
+    // Calcule o preço com base nas semanas adicionais (após a primeira
+    // semana)
+    preco_atualizado = quarto->preco;
 
     if (dias_restantes > 7) {
       int dias_excedentes = dias_restantes - 7;
@@ -894,7 +1038,7 @@ int precoF(struct Quarto *quarto, int hotel, const char *nome_hotel) {
     printf("Preço:R$ %.2lf\n", preco_atualizado);
   }
 
-  return x;
+  return preco_atualizado;
 }
 
 void valores() {
@@ -966,65 +1110,98 @@ void textoP() {
 
   printf("\n\tPolítica de Privacidade de Dados:\n");
 
-  printf(
-      "\n\t  Nós, da Confort Haven, respeitamos a sua privacidade e nos "
-      "comprometemos a proteger os seus dados pessoais. Esta política de "
-      "privacidade tem como objetivo informar você sobre como tratamos os seus "
-      "dados pessoais quando você utiliza os nossos serviços, seja através do "
-      "nosso site, aplicativo, telefone ou presencialmente.\n\n  Dados "
-      "pessoais são todas as informações que se referem a uma pessoa natural "
-      "identificada ou identificável, como nome, CPF, e-mail, telefone, "
-      "endereço, dados de pagamento, preferências de hospedagem, entre "
-      "outros.\n\n  Ao utilizar os nossos serviços, você nos fornece alguns "
-      "dados pessoais que são necessários para a prestação dos serviços "
-      "contratados, tais como:\n\n  - Dados de identificação: nome completo, "
-      "CPF, RG, data de nascimento, nacionalidade, estado civil;\n\n  - Dados "
-      "de contato: e-mail, telefone, endereço;\n\n- Dados de pagamento: número "
-      "do cartão de crédito, código de segurança, data de validade;\n\n- Dados "
-      "de hospedagem: data de entrada e saída, número de hóspedes, tipo de "
-      "quarto, serviços adicionais solicitados;\n\n- Dados de preferências: "
-      "preferências de quarto, alimentação, lazer, entretenimento;\n\nNós "
-      "tratamos os seus dados pessoais com base no seu consentimento, que é "
-      "manifestado quando você aceita esta política de privacidade. Você pode "
-      "retirar o seu consentimento a qualquer momento, entrando em contato "
-      "conosco pelos canais indicados ao final desta política. A retirada do "
-      "consentimento não afeta a legalidade do tratamento realizado com base "
-      "no consentimento anterior.\n\nNós utilizamos os seus dados pessoais "
-      "para as seguintes finalidades:\n\n- Prestar os serviços contratados por "
-      "você;\n\n- Enviar confirmações e lembretes sobre a sua reserva;\n\n- "
-      "Enviar ofertas e promoções personalizadas sobre os nossos "
-      "serviços;\n\n- Realizar pesquisas de satisfação e melhorar a qualidade "
-      "dos nossos serviços;\n\n- Cumprir obrigações legais e "
-      "regulatórias;\n\nNós compartilhamos os seus dados pessoais com os "
-      "seguintes destinatários:\n\n- Parceiros comerciais que nos auxiliam na "
-      "prestação dos serviços contratados por você, como empresas de "
-      "transporte, alimentação e lazer;\n\n- Fornecedores de serviços "
-      "tecnológicos que nos apoiam na operação e segurança dos nossos "
-      "sistemas;\n\n- Autoridades públicas competentes que nos solicitam os "
-      "seus dados pessoais por motivos legais ou regulatórios;\n\nNós "
-      "armazenamos os seus dados pessoais pelo tempo necessário para cumprir "
-      "as finalidades para as quais foram coletados, respeitando os prazos "
-      "legais e regulatórios aplicáveis.\n\nNós adotamos medidas técnicas e "
-      "administrativas adequadas para proteger os seus dados pessoais contra "
-      "perdas, danos, acessos não autorizados, alterações indevidas ou "
-      "divulgação indevida.\n\nVocê tem os seguintes direitos em relação aos "
-      "seus dados pessoais:\n\n- Acessar os seus dados pessoais que estão sob "
-      "o nosso controle;\n\n- Corrigir ou atualizar os seus dados pessoais que "
-      "estejam incompletos ou incorretos;\n\n- Solicitar a exclusão dos seus "
-      "dados pessoais que não sejam mais necessários para as finalidades para "
-      "as quais foram coletados;\n\n- Solicitar a portabilidade dos seus dados "
-      "pessoais para outro fornecedor de serviços similares aos nossos;\n\n- "
-      "Solicitar a limitação ou a oposição ao tratamento dos seus dados "
-      "pessoais em determinadas situações;\n\nPara exercer os seus direitos ou "
-      "tirar dúvidas sobre esta política de privacidade, você pode entrar em "
-      "contato conosco pelos seguintes canais:\n\n- E-mail: contato@Confort "
-      "Haven.com.br\n- Telefone: (11) 1234-5678\n- Endereço: Rua das Capitais, "
-      "123 - Centro - São Paulo - SP\n\nEsta política de privacidade pode ser "
-      "alterada periodicamente para refletir as mudanças na nossa forma de "
-      "tratar os seus dados pessoais. Nós recomendamos que você consulte esta "
-      "política regularmente para se manter informado sobre as nossas "
-      "práticas.\n\nEsta política de privacidade foi atualizada em "
-      "25/10/2023.\n");
+  printf("\n\t  Nós, da Confort Haven, respeitamos a sua privacidade e nos "
+         "comprometemos a proteger os seus dados pessoais. Esta política de "
+         "privacidade tem como objetivo informar você sobre como tratamos os "
+         "seus "
+         "dados pessoais quando você utiliza os nossos serviços, seja através "
+         "do "
+         "nosso site, aplicativo, telefone ou presencialmente.\n\n  Dados "
+         "pessoais são todas as informações que se referem a uma pessoa "
+         "natural "
+         "identificada ou identificável, como nome, CPF, e-mail, telefone, "
+         "endereço, dados de pagamento, preferências de hospedagem, entre "
+         "outros.\n\n  Ao utilizar os nossos serviços, você nos fornece "
+         "alguns "
+         "dados pessoais que são necessários para a prestação dos serviços "
+         "contratados, tais como:\n\n  - Dados de identificação: nome "
+         "completo, "
+         "CPF, RG, data de nascimento, nacionalidade, estado civil;\n\n  - "
+         "Dados "
+         "de contato: e-mail, telefone, endereço;\n\n- Dados de pagamento: "
+         "número "
+         "do cartão de crédito, código de segurança, data de validade;\n\n- "
+         "Dados "
+         "de hospedagem: data de entrada e saída, número de hóspedes, tipo de "
+         "quarto, serviços adicionais solicitados;\n\n- Dados de "
+         "preferências: "
+         "preferências de quarto, alimentação, lazer, entretenimento;\n\nNós "
+         "tratamos os seus dados pessoais com base no seu consentimento, que "
+         "é "
+         "manifestado quando você aceita esta política de privacidade. Você "
+         "pode "
+         "retirar o seu consentimento a qualquer momento, entrando em contato "
+         "conosco pelos canais indicados ao final desta política. A retirada "
+         "do "
+         "consentimento não afeta a legalidade do tratamento realizado com "
+         "base "
+         "no consentimento anterior.\n\nNós utilizamos os seus dados pessoais "
+         "para as seguintes finalidades:\n\n- Prestar os serviços contratados "
+         "por "
+         "você;\n\n- Enviar confirmações e lembretes sobre a sua "
+         "reserva;\n\n- "
+         "Enviar ofertas e promoções personalizadas sobre os nossos "
+         "serviços;\n\n- Realizar pesquisas de satisfação e melhorar a "
+         "qualidade "
+         "dos nossos serviços;\n\n- Cumprir obrigações legais e "
+         "regulatórias;\n\nNós compartilhamos os seus dados pessoais com os "
+         "seguintes destinatários:\n\n- Parceiros comerciais que nos auxiliam "
+         "na "
+         "prestação dos serviços contratados por você, como empresas de "
+         "transporte, alimentação e lazer;\n\n- Fornecedores de serviços "
+         "tecnológicos que nos apoiam na operação e segurança dos nossos "
+         "sistemas;\n\n- Autoridades públicas competentes que nos solicitam "
+         "os "
+         "seus dados pessoais por motivos legais ou regulatórios;\n\nNós "
+         "armazenamos os seus dados pessoais pelo tempo necessário para "
+         "cumprir "
+         "as finalidades para as quais foram coletados, respeitando os prazos "
+         "legais e regulatórios aplicáveis.\n\nNós adotamos medidas técnicas "
+         "e "
+         "administrativas adequadas para proteger os seus dados pessoais "
+         "contra "
+         "perdas, danos, acessos não autorizados, alterações indevidas ou "
+         "divulgação indevida.\n\nVocê tem os seguintes direitos em relação "
+         "aos "
+         "seus dados pessoais:\n\n- Acessar os seus dados pessoais que estão "
+         "sob "
+         "o nosso controle;\n\n- Corrigir ou atualizar os seus dados pessoais "
+         "que "
+         "estejam incompletos ou incorretos;\n\n- Solicitar a exclusão dos "
+         "seus "
+         "dados pessoais que não sejam mais necessários para as finalidades "
+         "para "
+         "as quais foram coletados;\n\n- Solicitar a portabilidade dos seus "
+         "dados "
+         "pessoais para outro fornecedor de serviços similares aos "
+         "nossos;\n\n- "
+         "Solicitar a limitação ou a oposição ao tratamento dos seus dados "
+         "pessoais em determinadas situações;\n\nPara exercer os seus "
+         "direitos ou "
+         "tirar dúvidas sobre esta política de privacidade, você pode entrar "
+         "em "
+         "contato conosco pelos seguintes canais:\n\n- E-mail: "
+         "contato@Confort "
+         "Haven.com.br\n- Telefone: (11) 1234-5678\n- Endereço: Rua das "
+         "Capitais, "
+         "123 - Centro - São Paulo - SP\n\nEsta política de privacidade pode "
+         "ser "
+         "alterada periodicamente para refletir as mudanças na nossa forma de "
+         "tratar os seus dados pessoais. Nós recomendamos que você consulte "
+         "esta "
+         "política regularmente para se manter informado sobre as nossas "
+         "práticas.\n\nEsta política de privacidade foi atualizada em "
+         "25/10/2023.\n");
 
   getchar();
   while (getchar() != '\n')
@@ -1035,50 +1212,69 @@ void textoT() {
 
   printf("\n\n\tTermos de uso:\n");
 
-  printf(
-      "\n\t  Este termo de uso estabelece as condições gerais para a "
-      "utilização "
-      "dos serviços oferecidos pela Confort Haven, seja através do nosso site, "
-      "aplicativo, telefone ou presencialmente.\n\n  Ao utilizar os nossos "
-      "serviços, você declara que leu, compreendeu e aceitou este termo de "
-      "uso, bem como a nossa política de privacidade, que faz parte integrante "
-      "deste termo.\n\n  Você também declara que é maior de 18 anos e tem "
-      "plena "
-      "capacidade para contratar os nossos serviços.\n\n  Os nossos serviços "
-      "consistem em oferecer acomodações confortáveis e de qualidade, com "
-      "diversas opções de quarto, alimentação, lazer e entretenimento.\n\n  "
-      "Para "
-      "contratar os nossos serviços, você precisa fornecer alguns dados "
-      "pessoais, conforme descrito na nossa política de privacidade. Você é "
-      "responsável pela veracidade e atualização dos seus dados "
-      "pessoais.\n\n  Você pode realizar a sua reserva pelo nosso aplicativo "
-      "ou "
-      "entrando em contato com hotel, escolhendo o tipo de quarto, a data de "
-      "entrada e saída, o número de hóspedes e os serviços adicionais que "
-      "desejar.\n\n  Você pode pagar pela sua reserva com cartão de crédito ou "
-      "débito, ou ainda no momento do check-in.\n\n  Você pode cancelar ou "
-      "alterar a sua reserva até 24 horas antes da data prevista para o "
-      "check-in, sem custo adicional. Caso contrário, será cobrada uma multa "
-      "equivalente ao valor fixo do quarto.\n\n  Você deve respeitar as normas "
-      "internas da Confort Haven durante a sua hospedagem, tais como:\n\n    - "
-      "Não fumar nas dependências internas do hotel;\n\n    - Não perturbar o "
-      "sossego dos demais hóspedes;\n\n    - Não danificar ou subtrair os bens "
-      "do hotel;\n\n    - Não levar animais de estimação sem autorização "
-      "prévia;\n\n  A Confort Haven se reserva o direito de recusar ou "
-      "encerrar "
-      "a hospedagem de qualquer hóspede que descumprir as normas internas ou "
-      "causar transtornos aos demais hóspedes ou funcionários.\n\n  A Confort "
-      "Haven não se responsabiliza por objetos deixados ou esquecidos nas "
-      "dependências do hotel. Recomendamos que você utilize o cofre do seu "
-      "quarto para guardar os seus objetos de valor.\n\n  A Confort Haven pode "
-      "alterar este termo de uso a qualquer momento, sem aviso prévio. As "
-      "alterações entrarão em vigor na data da sua publicação no nosso site ou "
-      "aplicativo. Recomendamos que você consulte este termo regularmente para "
-      "se manter informado sobre as nossas condições de uso.\n\n  Este termo "
-      "de "
-      "uso é regido pelas leis brasileiras. Qualquer controvérsia decorrente "
-      "deste termo será submetida ao foro da comarca de São Paulo - "
-      "SP.\n\n  Este termo de uso foi atualizado em 25/10/2023.\n");
+  printf("\n\t  Este termo de uso estabelece as condições gerais para a "
+         "utilização "
+         "dos serviços oferecidos pela Confort Haven, seja através do nosso "
+         "site, "
+         "aplicativo, telefone ou presencialmente.\n\n  Ao utilizar os nossos "
+         "serviços, você declara que leu, compreendeu e aceitou este termo de "
+         "uso, bem como a nossa política de privacidade, que faz parte "
+         "integrante "
+         "deste termo.\n\n  Você também declara que é maior de 18 anos e tem "
+         "plena "
+         "capacidade para contratar os nossos serviços.\n\n  Os nossos "
+         "serviços "
+         "consistem em oferecer acomodações confortáveis e de qualidade, com "
+         "diversas opções de quarto, alimentação, lazer e entretenimento.\n\n "
+         " "
+         "Para "
+         "contratar os nossos serviços, você precisa fornecer alguns dados "
+         "pessoais, conforme descrito na nossa política de privacidade. Você "
+         "é "
+         "responsável pela veracidade e atualização dos seus dados "
+         "pessoais.\n\n  Você pode realizar a sua reserva pelo nosso "
+         "aplicativo "
+         "ou "
+         "entrando em contato com hotel, escolhendo o tipo de quarto, a data "
+         "de "
+         "entrada e saída, o número de hóspedes e os serviços adicionais que "
+         "desejar.\n\n  Você pode pagar pela sua reserva com cartão de "
+         "crédito ou "
+         "débito, ou ainda no momento do check-in.\n\n  Você pode cancelar ou "
+         "alterar a sua reserva até 24 horas antes da data prevista para o "
+         "check-in, sem custo adicional. Caso contrário, será cobrada uma "
+         "multa "
+         "equivalente ao valor fixo do quarto.\n\n  Você deve respeitar as "
+         "normas "
+         "internas da Confort Haven durante a sua hospedagem, tais como:\n\n  "
+         "  - "
+         "Não fumar nas dependências internas do hotel;\n\n    - Não "
+         "perturbar o "
+         "sossego dos demais hóspedes;\n\n    - Não danificar ou subtrair os "
+         "bens "
+         "do hotel;\n\n    - Não levar animais de estimação sem autorização "
+         "prévia;\n\n  A Confort Haven se reserva o direito de recusar ou "
+         "encerrar "
+         "a hospedagem de qualquer hóspede que descumprir as normas internas "
+         "ou "
+         "causar transtornos aos demais hóspedes ou funcionários.\n\n  A "
+         "Confort "
+         "Haven não se responsabiliza por objetos deixados ou esquecidos nas "
+         "dependências do hotel. Recomendamos que você utilize o cofre do seu "
+         "quarto para guardar os seus objetos de valor.\n\n  A Confort Haven "
+         "pode "
+         "alterar este termo de uso a qualquer momento, sem aviso prévio. As "
+         "alterações entrarão em vigor na data da sua publicação no nosso "
+         "site ou "
+         "aplicativo. Recomendamos que você consulte este termo regularmente "
+         "para "
+         "se manter informado sobre as nossas condições de uso.\n\n  Este "
+         "termo "
+         "de "
+         "uso é regido pelas leis brasileiras. Qualquer controvérsia "
+         "decorrente "
+         "deste termo será submetida ao foro da comarca de São Paulo - "
+         "SP.\n\n  Este termo de uso foi atualizado em 25/10/2023.\n");
 
   getchar();
   while (getchar() != '\n')
